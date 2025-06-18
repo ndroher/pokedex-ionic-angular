@@ -30,12 +30,7 @@ import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
 import { addIcons } from 'ionicons';
-import {
-  arrowBackOutline,
-  arrowBackSharp,
-  heart,
-  heartOutline,
-} from 'ionicons/icons';
+import { arrowBackOutline, heart, heartOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-detalhes',
