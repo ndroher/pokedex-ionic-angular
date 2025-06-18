@@ -11,22 +11,5 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
-    <ion-item
-      button
-      *ngFor="let pokemon of pokemons"
-      button
-      [routerLink]="['/detalhes', pokemon.id]"
-    >
-      <ion-avatar slot="start">
-        <img
-          [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/' + pokemon.id + '.png'"
-          [alt]="pokemon.name"
-        />
-      </ion-avatar>
-      <ion-label class="ion-text-capitalize">
-        #{{ pokemon.id }} {{ pokemon.name }}</ion-label
-      >
-    </ion-item>
-  </ion-list>
+  <app-lista [pokemons]="pokemons" />
 </ion-content>

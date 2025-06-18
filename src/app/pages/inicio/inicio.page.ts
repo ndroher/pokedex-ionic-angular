@@ -6,16 +6,14 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonAvatar,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
 } from '@ionic/angular/standalone';
+import {
+  ListaComponent,
+  IPokemonLista,
+} from 'src/app/components/lista/lista.component';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
-import { PokemonListResults } from 'src/app/services/pokeapi/pokeapi.mode';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
@@ -26,18 +24,14 @@ import { RouterLink } from '@angular/router';
     IonToolbar,
     IonTitle,
     IonContent,
-    IonList,
-    IonItem,
-    IonLabel,
-    IonAvatar,
+    ListaComponent,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     CommonModule,
-    RouterLink,
   ],
 })
 export class InicioPage implements OnInit {
-  pokemons: PokemonListResults[] = [];
+  pokemons: IPokemonLista[] = [];
   offset = 0;
   limit = 20;
 
@@ -71,11 +65,11 @@ export class InicioPage implements OnInit {
           loading.dismiss();
         }
 
-        let newPokemons = res.results.map((pokemon) => {
+        let newPokemons: IPokemonLista[] = res.results.map((pokemon) => {
           const id = this.getId(pokemon.url);
           return {
-            ...pokemon,
             id,
+            name: pokemon.name,
           };
         });
 

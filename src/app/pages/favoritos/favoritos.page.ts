@@ -5,14 +5,12 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonAvatar,
 } from '@ionic/angular/standalone';
+import {
+  ListaComponent,
+  IPokemonLista,
+} from 'src/app/components/lista/lista.component';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
-import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-favoritos',
@@ -23,16 +21,12 @@ import { RouterLink } from '@angular/router';
     IonToolbar,
     IonTitle,
     IonContent,
-    IonList,
-    IonItem,
-    IonLabel,
-    IonAvatar,
+    ListaComponent,
     CommonModule,
-    RouterLink,
   ],
 })
 export class FavoritosPage {
-  pokemons: IPokemon[] = [];
+  pokemons: IPokemonLista[] = [];
 
   constructor(private favoritosService: FavoritosService) {}
 
