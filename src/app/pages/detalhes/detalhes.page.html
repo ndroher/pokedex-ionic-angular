@@ -7,6 +7,14 @@
       <ion-title class="ion-text-capitalize">
         #{{ pokemon.id }} {{ pokemon.name }}
       </ion-title>
+      <ion-buttons slot="end">
+        <ion-button id="open-toast" (click)="toggleFavorito()">
+          <ion-icon
+            slot="icon-only"
+            [name]="isFavorito ? 'heart' : 'heart-outline'"
+          />
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
@@ -127,6 +135,11 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+    <ion-toast
+      trigger="open-toast"
+      [message]="toastMessage"
+      [duration]="3000"
+    />
   </ion-content>
 </div>
 

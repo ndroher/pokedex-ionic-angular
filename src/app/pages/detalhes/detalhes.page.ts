@@ -6,6 +6,8 @@ import {
   IonTitle,
   IonContent,
   IonButtons,
+  IonButton,
+  IonIcon,
   IonBackButton,
   IonCard,
   IonCardHeader,
@@ -22,10 +24,14 @@ import {
   IonText,
   IonSpinner,
   IonProgressBar,
+  IonToast,
 } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
+import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
+import { addIcons } from 'ionicons';
+import { heart, heartOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-detalhes',
@@ -38,6 +44,8 @@ import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
     IonTitle,
     IonContent,
     IonButtons,
+    IonButton,
+    IonIcon,
     IonBackButton,
     IonCard,
     IonCardHeader,
@@ -54,23 +62,46 @@ import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
     IonText,
     IonSpinner,
     IonProgressBar,
+    IonToast,
     CommonModule,
   ],
 })
 export class DetalhesPage implements OnInit {
   pokemon?: IPokemon;
+  isFavorito = false;
+  toastMessage = '';
 
   constructor(
     private route: ActivatedRoute,
-    private pokeapiService: PokeAPIService
-  ) {}
+    private pokeapiService: PokeAPIService,
+    private favoritosService: FavoritosService
+  ) {
+    addIcons({ heart, heartOutline });
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.pokeapiService.getPokemon(id).subscribe((res) => {
+      this.pokeapiService.getPokemon(id).subscribe(async (res) => {
         this.pokemon = res;
+        this.isFavorito = await this.favoritosService.isFavorito(
+          this.pokemon.id
+        );
       });
     }
+  }
+
+  async toggleFavorito() {
+    if (!this.pokemon) return;
+
+    if (this.isFavorito) {
+      await this.favoritosService.removeFavorito(this.pokemon.id);
+      this.toastMessage = `${this.pokemon.name} removido dos favoritos.`;
+    } else {
+      await this.favoritosService.setFavorito(this.pokemon);
+      this.toastMessage = `${this.pokemon.name} adicionado aos favoritos!`;
+    }
+
+    this.isFavorito = !this.isFavorito;
   }
 }
