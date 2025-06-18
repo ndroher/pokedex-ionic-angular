@@ -2,7 +2,9 @@
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/inicio"></ion-back-button>
+        <ion-button (click)="voltar()">
+          <ion-icon slot="icon-only" name="arrow-back-outline" />
+        </ion-button>
       </ion-buttons>
       <ion-title class="ion-text-capitalize">
         #{{ pokemon.id }} {{ pokemon.name }}

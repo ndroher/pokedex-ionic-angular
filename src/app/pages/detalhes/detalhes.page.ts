@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -8,7 +8,6 @@ import {
   IonButtons,
   IonButton,
   IonIcon,
-  IonBackButton,
   IonCard,
   IonCardHeader,
   IonCardTitle,
@@ -31,7 +30,12 @@ import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
 import { addIcons } from 'ionicons';
-import { heart, heartOutline } from 'ionicons/icons';
+import {
+  arrowBackOutline,
+  arrowBackSharp,
+  heart,
+  heartOutline,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-detalhes',
@@ -46,7 +50,6 @@ import { heart, heartOutline } from 'ionicons/icons';
     IonButtons,
     IonButton,
     IonIcon,
-    IonBackButton,
     IonCard,
     IonCardHeader,
     IonCardTitle,
@@ -74,9 +77,10 @@ export class DetalhesPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private pokeapiService: PokeAPIService,
-    private favoritosService: FavoritosService
+    private favoritosService: FavoritosService,
+    private location: Location
   ) {
-    addIcons({ heart, heartOutline });
+    addIcons({ heart, heartOutline, arrowBackOutline });
   }
 
   ngOnInit() {
@@ -103,5 +107,9 @@ export class DetalhesPage implements OnInit {
     }
 
     this.isFavorito = !this.isFavorito;
+  }
+
+  voltar(): void {
+    this.location.back();
   }
 }
