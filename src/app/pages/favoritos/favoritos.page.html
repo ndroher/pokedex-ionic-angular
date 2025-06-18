@@ -11,5 +11,17 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-lista [pokemons]="pokemons" />
+  <div
+    *ngIf="!pokemons.length"
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 75%;
+    "
+  >
+    <ion-text color="medium">Nenhum Pokémon favorito 🙁</ion-text>
+  </div>
+
+  <app-lista *ngIf="pokemons.length" [pokemons]="pokemons" />
 </ion-content>

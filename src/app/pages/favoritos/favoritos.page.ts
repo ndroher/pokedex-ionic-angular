@@ -5,6 +5,7 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
+  IonText,
 } from '@ionic/angular/standalone';
 import {
   ListaComponent,
@@ -21,6 +22,7 @@ import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
     IonToolbar,
     IonTitle,
     IonContent,
+    IonText,
     ListaComponent,
     CommonModule,
   ],
