@@ -145,6 +145,14 @@
   </ion-content>
 </div>
 
-<div *ngIf="!pokemon" class="ion-text-center ion-padding-top">
+<div
+  *ngIf="!pokemon"
+  style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  "
+>
   <ion-spinner name="circles" />
 </div>

@@ -13,10 +13,12 @@
 
   <app-lista [pokemons]="pokemons" />
 
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="circles"
-      loadingText="Carregando mais Pokémons..."
-    ></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  <div class="ion-padding-top">
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="circles"
+        loadingText="Carregando mais Pokémons..."
+      />
+    </ion-infinite-scroll>
+  </div>
 </ion-content>
