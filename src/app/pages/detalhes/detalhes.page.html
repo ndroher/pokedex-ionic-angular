@@ -6,8 +6,11 @@
           <ion-icon slot="icon-only" name="arrow-back-outline" />
         </ion-button>
       </ion-buttons>
-      <ion-title class="ion-text-capitalize">
-        #{{ pokemon.id }} {{ pokemon.name }}
+      <ion-title>
+        <ion-text color="medium" style="font-size: 0.8em">
+          #{{ pokemon.id }}
+        </ion-text>
+        <ion-text class="ion-text-capitalize"> {{ pokemon.name }} </ion-text>
       </ion-title>
       <ion-buttons slot="end">
         <ion-button id="open-toast" (click)="toggleFavorito()">
@@ -23,8 +26,11 @@
   <ion-content [fullscreen]="true">
     <ion-header collapse="condense">
       <ion-toolbar>
-        <ion-title size="large" class="ion-text-capitalize">
-          #{{ pokemon.id }} {{ pokemon.name }}
+        <ion-title size="large">
+          <ion-text color="medium" style="font-size: 0.8em">
+            #{{ pokemon.id }}
+          </ion-text>
+          <ion-text class="ion-text-capitalize"> {{ pokemon.name }} </ion-text>
         </ion-title>
       </ion-toolbar>
     </ion-header>

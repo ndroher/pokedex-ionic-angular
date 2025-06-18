@@ -15,8 +15,20 @@
         [alt]="pokemon.name"
       />
     </ion-avatar>
-    <ion-label class="ion-text-capitalize">
-      #{{ pokemon.id }} {{ pokemon.name }}</ion-label
-    >
+    <ion-label>
+      <ion-text
+        color="medium"
+        style="
+          min-width: 5ch;
+          text-align: right;
+          font-size: 0.8em;
+          margin-right: 8px;
+          display: inline-block;
+        "
+      >
+        #{{ pokemon.id }}
+      </ion-text>
+      <ion-text class="ion-text-capitalize">{{ pokemon.name }}</ion-text>
+    </ion-label>
   </ion-item>
 </ion-list>
