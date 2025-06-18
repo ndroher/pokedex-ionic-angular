@@ -8,25 +8,17 @@ export interface IPokemonList {
 export interface PokemonListResults {
   name: string;
   url: string;
+  id?: number;
 }
 
 export interface IPokemon {
   id: number;
   name: string;
-  sprites: PokemonSprites;
   height: number;
   weight: number;
   types: PokemonType[];
   abilities: PokemonAbility[];
   stats: PokemonStat[];
-}
-
-export interface PokemonSprites {
-  other: {
-    home: {
-      front_default: string;
-    };
-  };
 }
 
 export interface PokemonType {

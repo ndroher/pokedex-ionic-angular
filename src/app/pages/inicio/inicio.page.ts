@@ -9,6 +9,7 @@ import {
   IonList,
   IonItem,
   IonLabel,
+  IonAvatar,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
 } from '@ionic/angular/standalone';
@@ -27,6 +28,7 @@ import { PokemonListResults } from 'src/app/services/pokeapi/pokeapi.mode';
     IonList,
     IonItem,
     IonLabel,
+    IonAvatar,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     CommonModule,
@@ -46,6 +48,11 @@ export class InicioPage implements OnInit {
     this.loadPokemons();
   }
 
+  private getId(url: string): number {
+    const urlParts = url.split('/').filter(Boolean);
+    return +urlParts[urlParts.length - 1];
+  }
+
   async loadPokemons(event?: any) {
     const loading = await this.loadingCtrl.create({
       message: 'Carregando...',
@@ -62,7 +69,17 @@ export class InicioPage implements OnInit {
           loading.dismiss();
         }
 
-        this.pokemons = [...this.pokemons, ...res.results];
+        let newPokemons = res.results.map((pokemon) => {
+          const id = this.getId(pokemon.url);
+          return {
+            ...pokemon,
+            id,
+          };
+        });
+
+        newPokemons = newPokemons.filter((pokemon) => pokemon.id <= 9999);
+
+        this.pokemons = [...this.pokemons, ...newPokemons];
 
         this.offset += this.limit;
 
