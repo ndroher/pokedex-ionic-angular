@@ -15,6 +15,7 @@ import {
 } from '@ionic/angular/standalone';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { PokemonListResults } from 'src/app/services/pokeapi/pokeapi.mode';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
@@ -32,6 +33,7 @@ import { PokemonListResults } from 'src/app/services/pokeapi/pokeapi.mode';
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     CommonModule,
+    RouterLink,
   ],
 })
 export class InicioPage implements OnInit {
