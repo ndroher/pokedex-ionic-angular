@@ -23,11 +23,11 @@ import {
   IonText,
   IonSpinner,
   IonProgressBar,
-  IonToast,
 } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
+import { ToastController } from '@ionic/angular';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, heart, heartOutline } from 'ionicons/icons';
@@ -60,20 +60,20 @@ import { arrowBackOutline, heart, heartOutline } from 'ionicons/icons';
     IonText,
     IonSpinner,
     IonProgressBar,
-    IonToast,
     CommonModule,
   ],
 })
 export class DetalhesPage implements OnInit {
   pokemon?: IPokemon;
   isFavorito = false;
-  toastMessage = '';
+  private currentToast: HTMLIonToastElement | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private pokeapiService: PokeAPIService,
     private favoritosService: FavoritosService,
-    private location: Location
+    private location: Location,
+    private toastCtrl: ToastController
   ) {
     addIcons({ heart, heartOutline, arrowBackOutline });
   }
@@ -93,15 +93,30 @@ export class DetalhesPage implements OnInit {
   async toggleFavorito() {
     if (!this.pokemon) return;
 
+    let toastMessage = '';
+
     if (this.isFavorito) {
       await this.favoritosService.removeFavorito(this.pokemon.id);
-      this.toastMessage = `${this.pokemon.name} removido dos favoritos.`;
+      toastMessage = `${this.pokemon.name} removido dos favoritos 😢`;
     } else {
       await this.favoritosService.setFavorito(this.pokemon);
-      this.toastMessage = `${this.pokemon.name} adicionado aos favoritos!`;
+      toastMessage = `${this.pokemon.name} adicionado aos favoritos!`;
     }
 
     this.isFavorito = !this.isFavorito;
+
+    if (this.currentToast) {
+      await this.currentToast.dismiss();
+      this.currentToast = null;
+    }
+
+    this.currentToast = await this.toastCtrl.create({
+      message: toastMessage,
+      duration: 2000,
+      position: 'top',
+      positionAnchor: 'header-id',
+    });
+    await this.currentToast.present();
   }
 
   voltar(): void {
