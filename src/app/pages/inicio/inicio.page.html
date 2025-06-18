@@ -10,4 +10,17 @@
       <ion-title size="large">Início</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list>
+    <ion-item button *ngFor="let pokemon of pokemons">
+      <ion-label> {{ pokemon.name }} </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="circles"
+      loadingText="Carregando mais Pokémons..."
+    ></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
