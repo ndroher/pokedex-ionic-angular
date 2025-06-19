@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoadingController } from '@ionic/angular';
 import {
   IonHeader,
   IonToolbar,
   IonTitle,
   IonContent,
+  IonSpinner,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
 } from '@ionic/angular/standalone';
@@ -25,21 +25,19 @@ import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
     IonTitle,
     IonContent,
     ListaComponent,
+    IonSpinner,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     CommonModule,
   ],
-  providers: [LoadingController],
 })
 export class InicioPage implements OnInit {
   pokemons: IPokemonLista[] = [];
   offset = 0;
   limit = 20;
+  isLoading = false;
 
-  constructor(
-    private pokeapiService: PokeAPIService,
-    private loadingCtrl: LoadingController
-  ) {}
+  constructor(private pokeapiService: PokeAPIService) {}
 
   ngOnInit(): void {
     this.loadPokemons();
@@ -51,19 +49,15 @@ export class InicioPage implements OnInit {
   }
 
   async loadPokemons(event?: any) {
-    const loading = await this.loadingCtrl.create({
-      message: 'Carregando...',
-      spinner: 'circles',
-    });
     if (!event) {
-      await loading.present();
+      this.isLoading = true;
     }
 
     this.pokeapiService
       .getPokemons(this.offset.toString(), this.limit.toString())
       .subscribe((res) => {
         if (!event) {
-          loading.dismiss();
+          this.isLoading = false;
         }
 
         let newPokemons: IPokemonLista[] = res.results.map((pokemon) => {

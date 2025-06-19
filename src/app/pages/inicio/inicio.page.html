@@ -11,7 +11,19 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-lista [pokemons]="pokemons" />
+  <div
+    *ngIf="isLoading"
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 75%;
+    "
+  >
+    <ion-spinner name="circles" />
+  </div>
+
+  <app-lista *ngIf="!isLoading" [pokemons]="pokemons" />
 
   <div class="ion-padding-top">
     <ion-infinite-scroll (ionInfinite)="loadMore($event)">
