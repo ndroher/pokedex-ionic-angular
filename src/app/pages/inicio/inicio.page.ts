@@ -29,6 +29,7 @@ import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
     IonInfiniteScrollContent,
     CommonModule,
   ],
+  providers: [LoadingController],
 })
 export class InicioPage implements OnInit {
   pokemons: IPokemonLista[] = [];

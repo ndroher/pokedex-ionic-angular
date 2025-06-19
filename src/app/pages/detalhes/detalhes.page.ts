@@ -62,6 +62,7 @@ import { arrowBackOutline, heart, heartOutline } from 'ionicons/icons';
     IonProgressBar,
     CommonModule,
   ],
+  providers: [ToastController],
 })
 export class DetalhesPage implements OnInit {
   pokemon?: IPokemon;
