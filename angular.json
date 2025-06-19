@@ -23,7 +23,9 @@
               "browser": ""
             },
             "index": "src/index.html",
-            "polyfills": ["src/polyfills.ts"],
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -39,8 +41,6 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/pokedex-ionic-angular/",
-              "deployUrl": "/pokedex-ionic-angular/",
               "budgets": [
                 {
                   "type": "initial",
@@ -129,7 +129,9 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@ionic/angular-toolkit"],
+    "schematicCollections": [
+      "@ionic/angular-toolkit"
+    ],
     "analytics": false
   },
   "schematics": {
