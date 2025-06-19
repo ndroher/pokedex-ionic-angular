@@ -4,7 +4,6 @@ import {
   provideRouter,
   withPreloading,
   PreloadAllModules,
-  withHashLocation,
 } from '@angular/router';
 import {
   IonicRouteStrategy,
@@ -20,11 +19,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideRouter(
-      routes,
-      withPreloading(PreloadAllModules),
-      withHashLocation()
-    ),
+    provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(),
     importProvidersFrom(IonicStorageModule.forRoot()),
   ],
