@@ -2,7 +2,7 @@
 <h1> Pokédex Ionic + Angular </h1>
 <br>
 <p>
-  Aplicativo de Pokédex multiplataforma desenvolvido em Ionic e Angular utilizado os serviços RESTful da API públca PokéAPI.
+  Aplicativo de Pokédex multiplataforma desenvolvido em Ionic e Angular utilizando os serviços RESTful da API pública PokéAPI.
 </p>
 <img src="docs/pokedex-ionic-angular.gif">
 <br>
@@ -15,7 +15,7 @@
 - [Boas Práticas](#boas-práticas)
 - [Responsividade](#responsividade)
 - [Deploy](#deploy)
-- [Adições Futuras](#adições-futuras)
+- [Melhorias Planejadas](#melhorias-planejadas)
 
 ## Páginas
 
@@ -30,7 +30,7 @@
 
 ### Tela de Detalhes
 
-`/detallhes/:id`
+`/detalhes/:id`
 
 Exibe detalhes de um Pokémon específico.
 
@@ -47,7 +47,7 @@ Exibe detalhes de um Pokémon específico.
 
 `/favoritos/`
 
-- Exibe os Pokémons que o usuário adicionou em seus favoritos.
+- Exibe os Pokémons que o usuário adicionou à sua lista de favoritos.
 - Utiliza o Ionic Storage ([@ionic/storage](https://github.com/ionic-team/ionic-storage)) para armazenar os dados no IndexedDB e localStorage.
 
 ## Boas Práticas
@@ -58,13 +58,13 @@ Exibe detalhes de um Pokémon específico.
 
 Componentes utilizados no projeto
 
-> e.g. "lista", utilizado nas páginas `inicio` e `favoritos` para exibir uma lista de Pokémons com imagem id e nome.
+> e.g. `Lista`, utilizado nas páginas `Início` e `Favoritos` para exibir uma lista de Pokémons com imagem, id e nome.
 
 #### /pages/
 
 Páginas do projeto
 
-> e.g. Ínicio, Detalhes e Favoritos
+> e.g. `Início`, `Detalhes` e `Favoritos`.
 
 #### /services/
 
@@ -84,7 +84,7 @@ Gerencia os favoritos utilizando [@ionic/storage](https://github.com/ionic-team/
 
 > getFavoritos() obtém a lista de favoritos.
 
-> setFavorito() adiciona um Pokémon a lista de favoritos.
+> setFavorito() adiciona um Pokémon à lista de favoritos.
 
 > removeFavorito() remove um Pokémon da lista de favoritos.
 
@@ -92,11 +92,11 @@ Gerencia os favoritos utilizando [@ionic/storage](https://github.com/ionic-team/
 
 #### /tabs/
 
-Navegação por tabs, garantindo um botão de fácil acesso para Ínicio e Favoritos em todas as páginas.
+Navegação por tabs, garantindo um botão de fácil acesso para `Início` e `Favoritos` em todas as páginas.
 
 > O projeto foi incializado utilizando o template de tabs fornecido pelo Ionic, utilizando o comando<br>`ionic start pokedex-ionic-angular tabs --type=angular`
 
-### Controle de versão
+### Controle de Versão
 
 - Padrão de Commits: `Conventional Commits`
 - Fluxo de Trabalho: `GitHub Flow`
@@ -115,13 +115,12 @@ O aplicativo foi hospedado na plataforma Netlify e pode ser acessado em:
 
 https://pokedex-ionic-angular.netlify.app/
 
-## Adições Futuras
+## Melhorias Planejadas
 
-⬜ Testes Unitários
-
-⬜ Filtro e Pesquisa de Pokémons
-
-⬜ Atualização da Interface
+- [ ] Criar testes unitários
+- [ ] Implementar pesquisa por nome do Pokémon
+- [ ] Implementar filtros por detalhes do Pokémon
+- [ ] Atualizar a interface
 
 <br><br><br>
 
