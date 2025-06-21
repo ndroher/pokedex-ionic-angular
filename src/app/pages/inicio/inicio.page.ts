@@ -6,6 +6,11 @@ import {
   IonTitle,
   IonContent,
   IonSpinner,
+  IonSearchbar,
+  IonText,
+  IonGrid,
+  IonCol,
+  IonRow,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
 } from '@ionic/angular/standalone';
@@ -14,6 +19,7 @@ import {
   IPokemonLista,
 } from 'src/app/components/lista/lista.component';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
+import { BuscaService } from 'src/app/services/busca/busca.service';
 
 @Component({
   selector: 'app-inicio',
@@ -26,6 +32,11 @@ import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
     IonContent,
     ListaComponent,
     IonSpinner,
+    IonSearchbar,
+    IonText,
+    IonGrid,
+    IonCol,
+    IonRow,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     CommonModule,
@@ -37,15 +48,22 @@ export class InicioPage implements OnInit {
   limit = 20;
   isLoading = false;
 
-  constructor(private pokeapiService: PokeAPIService) {}
+  constructor(
+    private pokeapiService: PokeAPIService,
+    public buscaService: BuscaService
+  ) {}
 
   ngOnInit(): void {
     this.loadPokemons();
   }
 
+  onSearch(event: any) {
+    this.buscaService.onSearch(event.detail.value);
+  }
+
   private getId(url: string): number {
     const urlParts = url.split('/').filter(Boolean);
-    return +urlParts[urlParts.length - 1];
+    return parseInt(urlParts[urlParts.length - 1]);
   }
 
   async loadPokemons(event?: any) {

@@ -1,0 +1,46 @@
+.toolbar-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.searchbar-wrapper {
+  backdrop-filter: saturate(180%) blur(20px);
+  border-radius: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.searchbar-wrapper ion-searchbar.transparent-searchbar {
+  --background: transparent;
+  --box-shadow: none;
+  min-height: unset;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.md .searchbar-wrapper {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.ios .searchbar-wrapper {
+  background: rgba(247, 247, 247, 0.85);
+}
+
+@media (prefers-color-scheme: dark) {
+  .md .searchbar-wrapper {
+    background: rgba(31, 31, 31, 0.85);
+  }
+
+  .ios .searchbar-wrapper {
+    background: rgba(13, 13, 13, 0.85);
+  }
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}

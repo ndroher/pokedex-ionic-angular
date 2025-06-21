@@ -118,7 +118,7 @@ https://pokedex-ionic-angular.netlify.app/
 ## Melhorias Planejadas
 
 - [ ] Criar testes unitários
-- [ ] Implementar pesquisa por nome do Pokémon
+- [x] Implementar busca por nome do Pokémon
 - [ ] Implementar filtros por detalhes do Pokémon
 - [ ] Atualizar a interface
 

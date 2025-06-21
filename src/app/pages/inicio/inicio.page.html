@@ -11,26 +11,58 @@
     </ion-toolbar>
   </ion-header>
 
-  <div
-    *ngIf="isLoading"
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 75%;
-    "
-  >
-    <ion-spinner name="circles" />
+  <ion-grid class="toolbar-sticky">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="8" size-lg="6">
+        <div class="searchbar-wrapper">
+          <ion-searchbar
+            placeholder="Buscar..."
+            [value]="buscaService.value"
+            (ionInput)="onSearch($event)"
+            (ionClear)="buscaService.clear()"
+            class="transparent-searchbar"
+          />
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="buscaService.value">
+    <div
+      *ngIf="buscaService.isLoading"
+      class="flex-center ion-text-center ion-padding"
+    >
+      <ion-text color="medium">Buscando Pokémon...</ion-text>
+      <ion-spinner name="circles" />
+    </div>
+
+    <app-lista
+      *ngIf="!buscaService.isLoading && buscaService.pokemons.length > 0"
+      [pokemons]="buscaService.pokemons"
+    />
+
+    <div
+      *ngIf="!buscaService.isLoading && buscaService.pokemons.length === 0"
+      class="ion-text-center ion-padding"
+    >
+      <ion-text color="medium">Nenhum Pokémon encontrado.</ion-text>
+    </div>
   </div>
 
-  <app-lista *ngIf="!isLoading" [pokemons]="pokemons" />
+  <div *ngIf="!buscaService.value">
+    <div *ngIf="isLoading" class="ion-text-center ion-padding">
+      <ion-spinner name="circles" />
+    </div>
 
-  <div class="ion-padding-top">
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
-      <ion-infinite-scroll-content
-        loadingSpinner="circles"
-        loadingText="Carregando mais Pokémons..."
-      />
-    </ion-infinite-scroll>
+    <app-lista *ngIf="!isLoading" [pokemons]="pokemons" />
+
+    <div class="ion-padding-top">
+      <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="circles"
+          loadingText="Carregando mais Pokémons..."
+        />
+      </ion-infinite-scroll>
+    </div>
   </div>
 </ion-content>
