@@ -87,10 +87,12 @@ export class InicioPage implements OnInit {
       .subscribe((res) => {
         this.isLoading = false;
 
-        const newPokemons: IPokemonLista[] = res.results.map((pokemon) => ({
+        let newPokemons: IPokemonLista[] = res.results.map((pokemon) => ({
           id: getId(pokemon.url),
           name: pokemon.name,
         }));
+
+        newPokemons = newPokemons.filter((pokemon) => pokemon.id <= 9999);
 
         this.pokemons = [...this.pokemons, ...newPokemons];
 
