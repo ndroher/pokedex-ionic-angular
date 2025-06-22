@@ -12,22 +12,43 @@
   </ion-header>
 
   <ion-grid class="toolbar-sticky">
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-md="8" size-lg="6">
-        <div class="searchbar-wrapper">
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="12" size-md="8" size-lg="4" class="flex-center">
+        <div class="toolbar-item-wrapper" style="flex-grow: 1">
           <ion-searchbar
             placeholder="Buscar..."
-            [value]="buscaService.value"
+            [value]="buscaService.valueNome"
             (ionInput)="onSearch($event)"
             (ionClear)="buscaService.clear()"
-            class="transparent-searchbar"
+            class="toolbar-item-transparent"
           />
+        </div>
+
+        <div class="toolbar-item-wrapper">
+          <ion-select
+            placeholder="Filtrar"
+            [value]="buscaService.valueTipo"
+            (ionChange)="onFilter($event)"
+            interface="popover"
+            class="toolbar-item-transparent"
+          >
+            <ion-icon
+              slot="start"
+              name="pricetag"
+              color="medium"
+              aria-hidden="true"
+            />
+            <ion-select-option [value]="null">Todos</ion-select-option>
+            <ion-select-option *ngFor="let tipo of tipos" [value]="tipo">
+              {{ tipo | titlecase }}
+            </ion-select-option>
+          </ion-select>
         </div>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <div *ngIf="buscaService.value">
+  <div *ngIf="buscaService.isActive">
     <div
       *ngIf="buscaService.isLoading"
       class="flex-center ion-text-center ion-padding"
@@ -36,28 +57,33 @@
       <ion-spinner name="circles" />
     </div>
 
-    <app-lista
-      *ngIf="!buscaService.isLoading && buscaService.pokemons.length > 0"
-      [pokemons]="buscaService.pokemons"
-    />
+    <div *ngIf="!buscaService.isLoading">
+      <app-lista
+        *ngIf="buscaService.pokemons.length > 0"
+        [pokemons]="buscaService.pokemons"
+      />
 
-    <div
-      *ngIf="!buscaService.isLoading && buscaService.pokemons.length === 0"
-      class="ion-text-center ion-padding"
-    >
-      <ion-text color="medium">Nenhum Pokémon encontrado.</ion-text>
+      <div
+        *ngIf="buscaService.pokemons.length === 0"
+        class="ion-text-center ion-padding"
+      >
+        <ion-text color="medium">Nenhum Pokémon encontrado.</ion-text>
+      </div>
     </div>
   </div>
 
-  <div *ngIf="!buscaService.value">
-    <div *ngIf="isLoading" class="ion-text-center ion-padding">
+  <div *ngIf="!buscaService.isActive">
+    <div
+      *ngIf="isLoading && pokemons.length === 0"
+      class="ion-text-center ion-padding"
+    >
       <ion-spinner name="circles" />
     </div>
 
-    <app-lista *ngIf="!isLoading" [pokemons]="pokemons" />
+    <app-lista *ngIf="pokemons.length > 0" [pokemons]="pokemons" />
 
     <div class="ion-padding-top">
-      <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll (ionInfinite)="loadPokemons($event)">
         <ion-infinite-scroll-content
           loadingSpinner="circles"
           loadingText="Carregando mais Pokémons..."

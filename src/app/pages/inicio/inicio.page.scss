@@ -4,7 +4,7 @@
   z-index: 10;
 }
 
-.searchbar-wrapper {
+.toolbar-item-wrapper {
   backdrop-filter: saturate(180%) blur(20px);
   border-radius: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
@@ -12,28 +12,42 @@
   overflow: hidden;
 }
 
-.searchbar-wrapper ion-searchbar.transparent-searchbar {
+.toolbar-item-wrapper ion-searchbar.toolbar-item-transparent,
+.toolbar-item-wrapper ion-select.toolbar-item-transparent {
   --background: transparent;
   --box-shadow: none;
   min-height: unset;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  --border: none;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  height: 48px;
+  display: flex;
+  align-items: center;
 }
 
-.md .searchbar-wrapper {
+.toolbar-item-wrapper ion-searchbar.toolbar-item-transparent {
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+.toolbar-item-wrapper ion-select.toolbar-item-transparent {
+  width: 180px;
+}
+
+.md .toolbar-item-wrapper {
   background: rgba(255, 255, 255, 0.85);
 }
 
-.ios .searchbar-wrapper {
+.ios .toolbar-item-wrapper {
   background: rgba(247, 247, 247, 0.85);
 }
 
 @media (prefers-color-scheme: dark) {
-  .md .searchbar-wrapper {
+  .md .toolbar-item-wrapper {
     background: rgba(31, 31, 31, 0.85);
   }
 
-  .ios .searchbar-wrapper {
+  .ios .toolbar-item-wrapper {
     background: rgba(13, 13, 13, 0.85);
   }
 }

@@ -7,6 +7,9 @@ import {
   IonContent,
   IonSpinner,
   IonSearchbar,
+  IonSelect,
+  IonSelectOption,
+  IonIcon,
   IonText,
   IonGrid,
   IonCol,
@@ -18,8 +21,12 @@ import {
   ListaComponent,
   IPokemonLista,
 } from 'src/app/components/lista/lista.component';
+import { getId } from 'src/app/utils/getId.utils';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { BuscaService } from 'src/app/services/busca/busca.service';
+import { addIcons } from 'ionicons';
+import { pricetag } from 'ionicons/icons';
+import { PokemonTypes } from 'src/app/services/pokeapi/pokeapi.mode';
 
 @Component({
   selector: 'app-inicio',
@@ -33,6 +40,9 @@ import { BuscaService } from 'src/app/services/busca/busca.service';
     ListaComponent,
     IonSpinner,
     IonSearchbar,
+    IonSelect,
+    IonSelectOption,
+    IonIcon,
     IonText,
     IonGrid,
     IonCol,
@@ -47,11 +57,14 @@ export class InicioPage implements OnInit {
   offset = 0;
   limit = 20;
   isLoading = false;
+  tipos = PokemonTypes;
 
   constructor(
     private pokeapiService: PokeAPIService,
     public buscaService: BuscaService
-  ) {}
+  ) {
+    addIcons({ pricetag });
+  }
 
   ngOnInit(): void {
     this.loadPokemons();
@@ -61,32 +74,23 @@ export class InicioPage implements OnInit {
     this.buscaService.onSearch(event.detail.value);
   }
 
-  private getId(url: string): number {
-    const urlParts = url.split('/').filter(Boolean);
-    return parseInt(urlParts[urlParts.length - 1]);
+  onFilter(event: any) {
+    this.buscaService.onFilter(event.detail.value);
   }
 
-  async loadPokemons(event?: any) {
-    if (!event) {
-      this.isLoading = true;
-    }
+  loadPokemons(event?: any) {
+    if (this.isLoading) return;
+    this.isLoading = true;
 
     this.pokeapiService
       .getPokemons(this.offset.toString(), this.limit.toString())
       .subscribe((res) => {
-        if (!event) {
-          this.isLoading = false;
-        }
+        this.isLoading = false;
 
-        let newPokemons: IPokemonLista[] = res.results.map((pokemon) => {
-          const id = this.getId(pokemon.url);
-          return {
-            id,
-            name: pokemon.name,
-          };
-        });
-
-        newPokemons = newPokemons.filter((pokemon) => pokemon.id <= 9999);
+        const newPokemons: IPokemonLista[] = res.results.map((pokemon) => ({
+          id: getId(pokemon.url),
+          name: pokemon.name,
+        }));
 
         this.pokemons = [...this.pokemons, ...newPokemons];
 
@@ -95,14 +99,8 @@ export class InicioPage implements OnInit {
         if (event) {
           event.target.complete();
 
-          if (res.next === null) {
-            event.target.disabled = true;
-          }
+          if (res.next === null) event.target.disabled = true;
         }
       });
-  }
-
-  loadMore(event: any) {
-    this.loadPokemons(event);
   }
 }

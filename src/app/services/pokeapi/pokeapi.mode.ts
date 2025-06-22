@@ -39,3 +39,35 @@ export interface PokemonStat {
     name: string;
   };
 }
+
+export interface IPokemonTypeResponse {
+  pokemon: IPokemonSlot[];
+}
+
+export interface IPokemonSlot {
+  pokemon: {
+    name: string;
+    url: string;
+  };
+}
+
+export const PokemonTypes = [
+  'normal',
+  'fighting',
+  'flying',
+  'poison',
+  'ground',
+  'rock',
+  'bug',
+  'ghost',
+  'steel',
+  'fire',
+  'water',
+  'grass',
+  'electric',
+  'psychic',
+  'ice',
+  'dragon',
+  'dark',
+  'fairy',
+];
