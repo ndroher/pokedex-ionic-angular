@@ -78,6 +78,8 @@ Obtém dados da API pública [PokéAPI](https://pokeapi.co/).
 
 > getPokemon() obtém detalhes de um Pokémon específico.
 
+> getPokemonsDoTipo() obtém uma lista de Pokémons de um determinado tipo.
+
 `Favoritos`
 
 Gerencia os favoritos utilizando [@ionic/storage](https://github.com/ionic-team/ionic-storage)
@@ -89,6 +91,10 @@ Gerencia os favoritos utilizando [@ionic/storage](https://github.com/ionic-team/
 > removeFavorito() remove um Pokémon da lista de favoritos.
 
 > isFavorito() verifica se um Pokémon está na lista de favoritos.
+
+`Busca`
+
+Realiza busca por Nome e/ou Tipo do Pokémon.
 
 #### /tabs/
 
@@ -118,8 +124,8 @@ https://pokedex-ionic-angular.netlify.app/
 ## Melhorias Planejadas
 
 - [ ] Criar testes unitários
-- [ ] Implementar pesquisa por nome do Pokémon
-- [ ] Implementar filtros por detalhes do Pokémon
+- [x] Implementar busca por nome do Pokémon
+- [x] Implementar busca por tipo do Pokémon
 - [ ] Atualizar a interface
 
 <br><br><br>

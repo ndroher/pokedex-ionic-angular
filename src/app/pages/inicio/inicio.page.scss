@@ -1,0 +1,60 @@
+.toolbar-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.toolbar-item-wrapper {
+  backdrop-filter: saturate(180%) blur(20px);
+  border-radius: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.toolbar-item-wrapper ion-searchbar.toolbar-item-transparent,
+.toolbar-item-wrapper ion-select.toolbar-item-transparent {
+  --background: transparent;
+  --box-shadow: none;
+  min-height: unset;
+  --border: none;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-item-wrapper ion-searchbar.toolbar-item-transparent {
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+.toolbar-item-wrapper ion-select.toolbar-item-transparent {
+  width: 180px;
+}
+
+.md .toolbar-item-wrapper {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.ios .toolbar-item-wrapper {
+  background: rgba(247, 247, 247, 0.85);
+}
+
+@media (prefers-color-scheme: dark) {
+  .md .toolbar-item-wrapper {
+    background: rgba(31, 31, 31, 0.85);
+  }
+
+  .ios .toolbar-item-wrapper {
+    background: rgba(13, 13, 13, 0.85);
+  }
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}

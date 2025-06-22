@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IPokemonList } from './pokeapi.mode';
-import { IPokemon } from './pokeapi.mode';
+import { IPokemonList, IPokemon, IPokemonTypeResponse } from './pokeapi.mode';
 
 @Injectable({
   providedIn: 'root',
@@ -23,5 +22,9 @@ export class PokeAPIService {
 
   getPokemon(id: string): Observable<IPokemon> {
     return this.http.get<IPokemon>(`${this.baseUrl}/pokemon/${id}`);
+  }
+
+  getPokemonsDoTipo(type: string): Observable<IPokemonTypeResponse> {
+    return this.http.get<IPokemonTypeResponse>(`${this.baseUrl}/type/${type}`);
   }
 }
