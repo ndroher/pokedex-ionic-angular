@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
+  ElementRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -13,6 +14,8 @@ import {
   IonIcon,
   IonLabel,
   IonToast,
+  Animation,
+  AnimationController,
 } from '@ionic/angular/standalone';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -42,6 +45,7 @@ import { heart, heartOutline } from 'ionicons/icons';
 export class CardPokemonComponent implements OnInit, OnDestroy {
   @Input() pokemon!: IPokemonLista;
   @Input() toastAnchorId: string | undefined;
+  @Input() index!: number;
   @Output() onFavoritoToggled = new EventEmitter<string>();
 
   isFavorito = false;
@@ -51,12 +55,55 @@ export class CardPokemonComponent implements OnInit, OnDestroy {
   pokemonInfo: IPokemon | null = null;
 
   private favoritosSubscription: Subscription | undefined;
+  private observer: IntersectionObserver | undefined;
+  private cardAnimation: Animation | undefined;
 
   constructor(
     private favoritosService: FavoritosService,
-    private pokeapiService: PokeAPIService
+    private pokeapiService: PokeAPIService,
+    private animationCtrl: AnimationController,
+    private el: ElementRef
   ) {
     addIcons({ heart, heartOutline });
+  }
+
+  ngAfterViewInit() {
+    this.el.nativeElement.style.opacity = '0';
+
+    let cardsRow: number;
+    const windowWidth = window.innerWidth;
+
+    if (windowWidth >= 992) {
+      cardsRow = 4;
+    } else if (windowWidth >= 768) {
+      cardsRow = 2;
+    } else {
+      cardsRow = 1;
+    }
+
+    const delay = (this.index % cardsRow) * 100;
+
+    this.cardAnimation = this.animationCtrl
+      .create()
+      .addElement(this.el.nativeElement)
+      .duration(500)
+      .delay(delay)
+      .fromTo('transform', 'translateY(24px)', 'translateY(0)')
+      .fromTo('opacity', '0', '1');
+
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.cardAnimation?.play();
+            this.observer?.unobserve(this.el.nativeElement);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    this.observer.observe(this.el.nativeElement);
   }
 
   async ngOnInit() {

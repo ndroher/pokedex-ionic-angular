@@ -1,13 +1,17 @@
 <ion-grid class="pokemon-grid" [fixed]="true">
   <ion-row class="ion-justify-content-center ion-align-items-center">
     <ion-col
-      *ngFor="let pokemon of pokemons"
+      *ngFor="let pokemon of pokemons; let i = index"
       size="12"
       size-md="6"
       size-lg="3"
       class="flex-center"
     >
-      <app-card-pokemon [pokemon]="pokemon" [toastAnchorId]="toastAnchorId" />
+      <app-card-pokemon
+        [pokemon]="pokemon"
+        [toastAnchorId]="toastAnchorId"
+        [index]="i"
+      />
     </ion-col>
   </ion-row>
 </ion-grid>
