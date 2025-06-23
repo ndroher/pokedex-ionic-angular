@@ -25,7 +25,7 @@ import {
   IonProgressBar,
   IonToast,
 } from '@ionic/angular/standalone';
-import { formatarNome } from 'src/app/utils/formatarNome.utils';
+import { formatarNome, titleCase } from 'src/app/utils/formatarNome.utils';
 import { hifenParaEspaco } from 'src/app/utils/hifenParaEspaco.utils';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -118,8 +118,12 @@ export class DetalhesPage implements OnInit, OnDestroy {
     this.isFavorito = await this.favoritosService.toggleFavorito(this.pokemon);
 
     this.toastMessage = this.isFavorito
-      ? `${this.pokemon.name} adicionado aos favoritos!`
-      : `${this.pokemon.name} removido dos favoritos 😢`;
+      ? `${titleCase(
+          formatarNome(this.pokemon.name)
+        )} adicionado aos favoritos!`
+      : `${titleCase(
+          formatarNome(this.pokemon.name)
+        )} removido dos favoritos 😢`;
 
     this.setOpenToast(true);
   }

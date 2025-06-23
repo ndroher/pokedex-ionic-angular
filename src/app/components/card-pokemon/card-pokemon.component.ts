@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
 import { IPokemonLista } from 'src/app/components/lista/lista.component';
 import { CORES_TIPO } from 'src/app/utils/cores.utils';
+import { formatarNome, titleCase } from 'src/app/utils/formatarNome.utils';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { addIcons } from 'ionicons';
@@ -86,8 +87,12 @@ export class CardPokemonComponent implements OnInit, OnDestroy {
         await this.favoritosService.toggleFavorito(pokemon);
 
         this.toastMessage = this.isFavorito
-          ? `${pokemon.name} adicionado aos favoritos!`
-          : `${pokemon.name} removido dos favoritos 😢`;
+          ? `${titleCase(
+              formatarNome(this.pokemon.name)
+            )} adicionado aos favoritos!`
+          : `${titleCase(
+              formatarNome(this.pokemon.name)
+            )} removido dos favoritos 😢`;
       },
       error: (error) => {
         this.toastMessage = `Erro ao adicionar aos favoritos`;
