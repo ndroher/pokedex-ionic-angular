@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" id="favoritos-header-id">
   <ion-toolbar>
     <ion-title> Favoritos </ion-title>
   </ion-toolbar>
@@ -23,5 +23,9 @@
     <ion-text color="medium">Nenhum Pokémon favorito 🙁</ion-text>
   </div>
 
-  <app-lista *ngIf="pokemons.length" [pokemons]="pokemons" />
+  <app-lista
+    *ngIf="pokemons.length"
+    [pokemons]="pokemons"
+    toastAnchorId="favoritos-header-id"
+  />
 </ion-content>

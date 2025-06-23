@@ -22,11 +22,13 @@ import {
   IPokemonLista,
 } from 'src/app/components/lista/lista.component';
 import { getId } from 'src/app/utils/getId.utils';
+import { formatarNome } from 'src/app/utils/formatarNome.utils';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { BuscaService } from 'src/app/services/busca/busca.service';
 import { addIcons } from 'ionicons';
 import { pricetag } from 'ionicons/icons';
 import { PokemonTypes } from 'src/app/services/pokeapi/pokeapi.mode';
+import { CORES_TIPO } from 'src/app/utils/cores.utils';
 
 @Component({
   selector: 'app-inicio',
@@ -87,10 +89,12 @@ export class InicioPage implements OnInit {
       .subscribe((res) => {
         this.isLoading = false;
 
-        const newPokemons: IPokemonLista[] = res.results.map((pokemon) => ({
+        let newPokemons: IPokemonLista[] = res.results.map((pokemon) => ({
           id: getId(pokemon.url),
-          name: pokemon.name,
+          name: formatarNome(pokemon.name),
         }));
+
+        newPokemons = newPokemons.filter((pokemon) => pokemon.id <= 9999);
 
         this.pokemons = [...this.pokemons, ...newPokemons];
 
@@ -102,5 +106,19 @@ export class InicioPage implements OnInit {
           if (res.next === null) event.target.disabled = true;
         }
       });
+  }
+
+  getFocusStyle(tipo: string): { [key: string]: string } {
+    if (tipo === 'default' || tipo === null) {
+      return {
+        '--highlight-color': 'none',
+      };
+    }
+
+    const colorSet = CORES_TIPO[tipo] || CORES_TIPO['default'];
+
+    return {
+      '--highlight-color': colorSet.primary,
+    };
   }
 }

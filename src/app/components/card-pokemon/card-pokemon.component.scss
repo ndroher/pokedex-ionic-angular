@@ -1,0 +1,130 @@
+.card-wrapper {
+  position: relative;
+  margin-top: 60px;
+  transition: 0.5s;
+}
+
+.card-info {
+  position: relative;
+  width: 240px;
+  height: 120px;
+  margin: 0;
+  padding: 1rem;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  backdrop-filter: saturate(180%) blur(20px);
+  border-radius: 10px;
+  border-bottom: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+.card-info::before,
+.card-info::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.card-info::before {
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--card-color-1),
+    var(--card-color-2),
+    transparent
+  );
+  opacity: 1;
+}
+
+.card-info:hover::before {
+  opacity: 0;
+}
+
+.card-info::after {
+  background: linear-gradient(
+    to right,
+    var(--card-color-1),
+    var(--card-color-1),
+    var(--card-color-2),
+    var(--card-color-2)
+  );
+  opacity: 0;
+}
+
+.card-info:hover::after {
+  opacity: 1;
+}
+
+.card-wrapper:hover {
+  transform: translateY(-6px);
+  .card-img {
+    transform: scale(1.1) rotate3d(1, -1, 1, 15deg);
+  }
+  .card-info {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-icon {
+  font-size: 28px;
+}
+
+.card-img {
+  position: absolute;
+  top: -60px;
+  right: 0px;
+  width: 120px;
+  height: 120px;
+  z-index: 2;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.card-nome {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2f2f2f;
+}
+
+.card-id {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+:host-context(.md) .card-info {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+:host-context(.ios) .card-info {
+  background: rgba(247, 247, 247, 0.85);
+}
+
+@media (prefers-color-scheme: dark) {
+  :host-context(.md) .card-info {
+    background: rgba(31, 31, 31, 0.85);
+  }
+
+  :host-context(.ios) .card-info {
+    background: rgba(13, 13, 13, 0.85);
+  }
+
+  .card-nome {
+    color: #f6f8fc;
+  }
+}

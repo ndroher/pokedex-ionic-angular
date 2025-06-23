@@ -9,6 +9,7 @@ import {
   startWith,
 } from 'rxjs/operators';
 import { getId } from 'src/app/utils/getId.utils';
+import { formatarNome } from 'src/app/utils/formatarNome.utils';
 import { PokeAPIService } from '../pokeapi/pokeapi.service';
 import { IPokemonLista } from 'src/app/components/lista/lista.component';
 
@@ -19,7 +20,7 @@ export class BuscaService {
   public isLoading = false;
   public pokemons: IPokemonLista[] = [];
   public valueNome = '';
-  public valueTipo: string | null = null;
+  public valueTipo: string = 'default';
   private valueNomeSubject = new Subject<string>();
   private valueTipoSubject = new Subject<string | null>();
   public isActive = false;
@@ -74,7 +75,7 @@ export class BuscaService {
     this.valueNomeSubject.next(this.valueNome);
   }
 
-  public onFilter(tipo: string | null): void {
+  public onFilter(tipo: string): void {
     this.valueTipo = tipo;
     this.valueTipoSubject.next(tipo);
   }
@@ -102,7 +103,10 @@ export class BuscaService {
   ): IPokemonLista[] {
     return list
       .map((pokemon) => {
-        return { id: getId(pokemon.url), name: pokemon.name };
+        return {
+          id: getId(pokemon.url),
+          name: formatarNome(pokemon.name),
+        };
       })
       .filter((pokemon) => pokemon.id <= 9999);
   }

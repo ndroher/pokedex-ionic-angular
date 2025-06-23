@@ -1,0 +1,77 @@
+const nomeFormatado: { [key: string]: string } = {
+  'nidoran-f': 'nidoran ♀',
+  'nidoran-m': 'nidoran ♂',
+  'mr-mime': 'mr. mime',
+  'type-null': 'type: null',
+  'tapu-koko': 'tapu koko',
+  'tapu-lele': 'tapu lele',
+  'tapu-bulu': 'tapu bulu',
+  'tapu-fini': 'tapu fini',
+  'mr-rime': 'mr. rime',
+  'great-tusk': 'great tusk',
+  'scream-tail': 'scream tail',
+  'brute-bonnet': 'brute bonnet',
+  'flutter-mane': 'flutter mane',
+  'slither-wing': 'slither wing',
+  'sandy-shocks': 'sandy shocks',
+  'iron-treads': 'iron treads',
+  'iron-bundle': 'iron bundle',
+  'iron-hands': 'iron hands',
+  'iron-jugulis': 'iron jugulis',
+  'iron-moth': 'iron moth',
+  'iron-thorns': 'iron thorns',
+  'roaring-moon': 'roaring moon',
+  'iron-valiant': 'iron valiant',
+  'walking-wake': 'walking wake',
+  'iron-leaves': 'iron leaves',
+  'gouging-fire': 'gouging fire',
+  'raging-bolt': 'raging bolt',
+  'iron-boulder': 'iron boulder',
+  'iron-crown': 'iron crown',
+  'deoxys-normal': 'deoxys',
+  'wormadam-plant': 'wormadam',
+  'giratina-altered': 'giratina',
+  'shaymin-land': 'shaymin',
+  'basculin-red-striped': 'basculin',
+  'darmanitan-standard': 'darmanitan',
+  'tornadus-incarnate': 'tornadus',
+  'thundurus-incarnate': 'thundurus',
+  'landorus-incarnate': 'landorus',
+  'keldeo-ordinary': 'keldeo',
+  'meloetta-aria': 'meloetta',
+  'meowstic-male': 'meowstic',
+  'aegislash-shield': 'aegislash',
+  'pumpkaboo-average': 'pumpkaboo',
+  'gourgeist-average': 'gourgeist',
+  'zygarde-50': 'zygarde',
+  'oricorio-baile': 'oricorio',
+  'lycanroc-midday': 'lycanroc',
+  'wishiwashi-solo': 'wishiwashi',
+  'minior-red-meteor': 'minior',
+  'mimikyu-disguised': 'mimikyu',
+  'toxtricity-amped': 'toxtricity',
+  'eiscue-ice': 'eiscue',
+  'indeedee-male': 'indeedee',
+  'morpeko-full-belly': 'morpeko',
+  'urshifu-single-strike': 'urshifu',
+  'basculegion-male': 'basculegion',
+  'enamorus-incarnate': 'enamorus',
+  'oinkologne-male': 'oinkologne',
+  'maushold-family-of-four': 'maushold',
+  'squawkabilly-green-plumage': 'squawkabilly',
+  'palafin-zero': 'palafin',
+  'tatsugiri-curly': 'tatsugiri',
+  'dudunsparce-two-segment': 'dudunsparce',
+};
+
+export function formatarNome(name: string): string {
+  if (nomeFormatado[name]) return nomeFormatado[name];
+
+  return name;
+}
+
+export function titleCase(str: string): string {
+  if (!str) return '';
+
+  return str.replace(/\b\w/g, (char) => char.toUpperCase());
+}

@@ -1,34 +1,17 @@
-<ion-list>
-  <ion-item
-    button
-    *ngFor="let pokemon of pokemons"
-    button
-    [routerLink]="['/detalhes', pokemon.id]"
-  >
-    <ion-avatar slot="start">
-      <img
-        [src]="
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/' +
-          pokemon.id +
-          '.png'
-        "
-        [alt]="pokemon.name"
+<ion-grid class="pokemon-grid" [fixed]="true">
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+    <ion-col
+      *ngFor="let pokemon of pokemons; let i = index"
+      size="12"
+      size-md="6"
+      size-lg="3"
+      class="flex-center"
+    >
+      <app-card-pokemon
+        [pokemon]="pokemon"
+        [toastAnchorId]="toastAnchorId"
+        [index]="i"
       />
-    </ion-avatar>
-    <ion-label>
-      <ion-text
-        color="medium"
-        style="
-          min-width: 5ch;
-          text-align: right;
-          font-size: 0.8em;
-          margin-right: 8px;
-          display: inline-block;
-        "
-      >
-        #{{ pokemon.id }}
-      </ion-text>
-      <ion-text class="ion-text-capitalize">{{ pokemon.name }}</ion-text>
-    </ion-label>
-  </ion-item>
-</ion-list>
+    </ion-col>
+  </ion-row>
+</ion-grid>

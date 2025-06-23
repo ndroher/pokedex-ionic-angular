@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" id="inicio-header-id">
   <ion-toolbar>
     <ion-title> Início </ion-title>
   </ion-toolbar>
@@ -30,7 +30,8 @@
             [value]="buscaService.valueTipo"
             (ionChange)="onFilter($event)"
             interface="popover"
-            class="toolbar-item-transparent"
+            class="toolbar-item-transparent select highlight"
+            [ngStyle]="getFocusStyle(buscaService.valueTipo)"
           >
             <ion-icon
               slot="start"
@@ -61,6 +62,7 @@
       <app-lista
         *ngIf="buscaService.pokemons.length > 0"
         [pokemons]="buscaService.pokemons"
+        toastAnchorId="inicio-header-id"
       />
 
       <div
@@ -80,7 +82,11 @@
       <ion-spinner name="circles" />
     </div>
 
-    <app-lista *ngIf="pokemons.length > 0" [pokemons]="pokemons" />
+    <app-lista
+      *ngIf="pokemons.length > 0"
+      [pokemons]="pokemons"
+      toastAnchorId="inicio-header-id"
+    />
 
     <div class="ion-padding-top">
       <ion-infinite-scroll (ionInfinite)="loadPokemons($event)">

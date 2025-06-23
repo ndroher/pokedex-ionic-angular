@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import {
   IonHeader,
@@ -25,10 +25,14 @@ import {
   IonProgressBar,
   IonToast,
 } from '@ionic/angular/standalone';
+import { formatarNome, titleCase } from 'src/app/utils/formatarNome.utils';
+import { hifenParaEspaco } from 'src/app/utils/hifenParaEspaco.utils';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
+import { CORES_TIPO } from 'src/app/utils/cores.utils';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, heart, heartOutline } from 'ionicons/icons';
 
@@ -64,10 +68,13 @@ import { arrowBackOutline, heart, heartOutline } from 'ionicons/icons';
     CommonModule,
   ],
 })
-export class DetalhesPage implements OnInit {
+export class DetalhesPage implements OnInit, OnDestroy {
   pokemon?: IPokemon;
   isFavorito = false;
   toastMessage = '';
+  isToastOpen = false;
+
+  private favoritosSub: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -83,28 +90,69 @@ export class DetalhesPage implements OnInit {
     if (id) {
       this.pokeapiService.getPokemon(id).subscribe(async (res) => {
         this.pokemon = res;
-        this.isFavorito = await this.favoritosService.isFavorito(
-          this.pokemon.id
+        this.pokemon.name = formatarNome(this.pokemon.name);
+        this.pokemon.abilities.forEach(
+          (p) => (p.ability.name = hifenParaEspaco(p.ability.name))
+        );
+        this.pokemon.stats.forEach(
+          (p) => (p.stat.name = hifenParaEspaco(p.stat.name))
+        );
+        this.favoritosSub = this.favoritosService.favoritosIds$.subscribe(
+          (ids) => {
+            if (this.pokemon) {
+              this.isFavorito = ids.includes(this.pokemon.id);
+            }
+          }
         );
       });
     }
   }
 
-  toggleFavorito() {
+  ngOnDestroy() {
+    this.favoritosSub?.unsubscribe();
+  }
+
+  async toggleFavorito() {
     if (!this.pokemon) return;
 
-    if (this.isFavorito) {
-      this.favoritosService.removeFavorito(this.pokemon.id);
-      this.toastMessage = `${this.pokemon.name} removido dos favoritos 😢`;
-    } else {
-      this.favoritosService.setFavorito(this.pokemon);
-      this.toastMessage = `${this.pokemon.name} adicionado aos favoritos!`;
-    }
+    this.isFavorito = await this.favoritosService.toggleFavorito(this.pokemon);
 
-    this.isFavorito = !this.isFavorito;
+    this.toastMessage = this.isFavorito
+      ? `${titleCase(
+          formatarNome(this.pokemon.name)
+        )} adicionado aos favoritos!`
+      : `${titleCase(
+          formatarNome(this.pokemon.name)
+        )} removido dos favoritos 😢`;
+
+    this.setOpenToast(true);
+  }
+
+  setOpenToast(isOpen: boolean) {
+    this.isToastOpen = isOpen;
   }
 
   voltar(): void {
     this.location.back();
+  }
+
+  getBadgeStyle(tipo: string): { [key: string]: string } {
+    const colorSet = CORES_TIPO[tipo] || CORES_TIPO['default'];
+
+    return {
+      '--badge-primary': colorSet.primary,
+      '--badge-secondary-light': colorSet['secondary-light'],
+      '--badge-secondary-dark': colorSet['secondary-dark'],
+    };
+  }
+
+  getProgressBarStyle(tipo: string): { [key: string]: string } {
+    const colorSet = CORES_TIPO[tipo] || CORES_TIPO['default'];
+
+    return {
+      '--progress-bar-primary': colorSet.primary,
+      '--progress-bar-secondary-light': colorSet['secondary-light'],
+      '--progress-bar-secondary-dark': colorSet['secondary-dark'],
+    };
   }
 }

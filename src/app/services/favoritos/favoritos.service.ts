@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
+import { BehaviorSubject } from 'rxjs';
 import { IPokemon } from '../pokeapi/pokeapi.mode';
+import { formatarNome } from 'src/app/utils/formatarNome.utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FavoritosService {
   private _storage: Storage | null = null;
+  private favoritosIdsSubject = new BehaviorSubject<number[]>([]);
+  public favoritosIds$ = this.favoritosIdsSubject.asObservable();
 
   constructor(private storage: Storage) {
     this.init();
   }
 
   async init() {
-    const storage = await this.storage.create();
-    this._storage = storage;
+    this._storage = await this.storage.create();
+    const favoritos = await this.getFavoritos();
+    const ids = favoritos.map((p) => p.id);
+    this.favoritosIdsSubject.next(ids);
   }
 
   async getFavoritos(): Promise<IPokemon[]> {
@@ -22,18 +28,25 @@ export class FavoritosService {
     return favoritos.sort((a: IPokemon, b: IPokemon) => a.id - b.id);
   }
 
-  async setFavorito(pokemon: IPokemon): Promise<void> {
+  async toggleFavorito(pokemon: IPokemon): Promise<boolean> {
     const favoritos = await this.getFavoritos();
-    if (!favoritos.some((p) => p.id === pokemon.id)) {
-      favoritos.push(pokemon);
-      await this._storage?.set('favoritos', favoritos);
-    }
-  }
+    const isFavorito = favoritos.some((p) => p.id === pokemon.id);
 
-  async removeFavorito(id: number): Promise<void> {
-    let favoritos = await this.getFavoritos();
-    favoritos = favoritos.filter((p) => p.id !== id);
-    await this._storage?.set('favoritos', favoritos);
+    let novosFavoritos: IPokemon[];
+
+    if (isFavorito) {
+      novosFavoritos = favoritos.filter((p) => p.id !== pokemon.id);
+    } else {
+      pokemon.name = formatarNome(pokemon.name);
+      novosFavoritos = [...favoritos, pokemon];
+    }
+
+    await this._storage?.set('favoritos', novosFavoritos);
+
+    const novosIds = novosFavoritos.map((p) => p.id);
+    this.favoritosIdsSubject.next(novosIds);
+
+    return !isFavorito;
   }
 
   async isFavorito(id: number): Promise<boolean> {

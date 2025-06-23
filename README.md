@@ -86,9 +86,7 @@ Gerencia os favoritos utilizando [@ionic/storage](https://github.com/ionic-team/
 
 > getFavoritos() obtém a lista de favoritos.
 
-> setFavorito() adiciona um Pokémon à lista de favoritos.
-
-> removeFavorito() remove um Pokémon da lista de favoritos.
+> toggleFavorito() adiciona/remove um Pokémon da lista de favoritos.
 
 > isFavorito() verifica se um Pokémon está na lista de favoritos.
 
@@ -124,9 +122,16 @@ https://pokedex-ionic-angular.netlify.app/
 ## Melhorias Planejadas
 
 - [ ] Criar testes unitários
-- [x] Implementar busca por nome do Pokémon
-- [x] Implementar busca por tipo do Pokémon
-- [ ] Atualizar a interface
+- [x] Filtos
+  - [x] Implementar busca por nome do Pokémon
+  - [x] Implementar busca por tipo do Pokémon
+- [ ] Interface
+  - [x] Criar cards para a lista Pokémons
+  - [x] Adicionar cores relativas aos tipos
+  - [x] Adicionar animações
+  - [x] Formatar nomes de Pokémons e habilidades
+  - [ ] Implementar botão em detalhes para navegar para Pokémon anterior e seguinte
+- [ ] Atualizar README.md
 
 <br><br><br>
 
