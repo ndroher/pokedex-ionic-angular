@@ -129,6 +129,7 @@ https://pokedex-ionic-angular.netlify.app/
   - [x] Criar cards para a lista Pokémons
   - [ ] Adicionar cores relativas aos tipos
   - [ ] Adicionar animações
+  - [ ] Formatar dados
   - [ ] Implementar botão em detalhes para navegar para Pokémon anterior e seguinte
 
 <br><br><br>

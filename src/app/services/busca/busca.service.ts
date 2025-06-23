@@ -9,6 +9,7 @@ import {
   startWith,
 } from 'rxjs/operators';
 import { getId } from 'src/app/utils/getId.utils';
+import { formatarNome } from 'src/app/utils/formatarNome.utils';
 import { PokeAPIService } from '../pokeapi/pokeapi.service';
 import { IPokemonLista } from 'src/app/components/lista/lista.component';
 
@@ -102,7 +103,10 @@ export class BuscaService {
   ): IPokemonLista[] {
     return list
       .map((pokemon) => {
-        return { id: getId(pokemon.url), name: pokemon.name };
+        return {
+          id: getId(pokemon.url),
+          name: formatarNome(pokemon.name),
+        };
       })
       .filter((pokemon) => pokemon.id <= 9999);
   }

@@ -25,6 +25,7 @@ import {
   IonProgressBar,
   IonToast,
 } from '@ionic/angular/standalone';
+import { formatarNome } from 'src/app/utils/formatarNome.utils';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
@@ -87,6 +88,7 @@ export class DetalhesPage implements OnInit, OnDestroy {
     if (id) {
       this.pokeapiService.getPokemon(id).subscribe(async (res) => {
         this.pokemon = res;
+        this.pokemon.name = formatarNome(this.pokemon.name);
         this.favoritosSub = this.favoritosService.favoritosIds$.subscribe(
           (ids) => {
             if (this.pokemon) {

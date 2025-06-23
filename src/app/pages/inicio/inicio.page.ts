@@ -22,6 +22,7 @@ import {
   IPokemonLista,
 } from 'src/app/components/lista/lista.component';
 import { getId } from 'src/app/utils/getId.utils';
+import { formatarNome } from 'src/app/utils/formatarNome.utils';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { BuscaService } from 'src/app/services/busca/busca.service';
 import { addIcons } from 'ionicons';
@@ -89,7 +90,7 @@ export class InicioPage implements OnInit {
 
         let newPokemons: IPokemonLista[] = res.results.map((pokemon) => ({
           id: getId(pokemon.url),
-          name: pokemon.name,
+          name: formatarNome(pokemon.name),
         }));
 
         newPokemons = newPokemons.filter((pokemon) => pokemon.id <= 9999);
