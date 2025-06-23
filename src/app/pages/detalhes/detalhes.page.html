@@ -38,12 +38,35 @@
 
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-md="8" size-lg="6">
+        <ion-col
+          size="12"
+          size-md="8"
+          size-lg="6"
+          style="display: flex; align-items: center"
+        >
+          <ion-button
+            fill="clear"
+            shape="round"
+            [routerLink]="['/detalhes', pokemon.id - 1]"
+            [disabled]="pokemon.id === 1"
+            color="medium"
+          >
+            <ion-icon slot="icon-only" name="chevron-back" />
+          </ion-button>
           <ion-img
             [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/' + pokemon.id + '.png'"
             [alt]="pokemon.name"
-            style="width: 70%; max-width: 512px; margin: auto"
+            class="img-detalhes"
           />
+          <ion-button
+            fill="clear"
+            shape="round"
+            [routerLink]="['/detalhes', pokemon.id + 1]"
+            [disabled]="pokemon.id === MAX_ID"
+            color="medium"
+          >
+            <ion-icon slot="icon-only" name="chevron-forward" />
+          </ion-button>
         </ion-col>
       </ion-row>
 

@@ -12,6 +12,7 @@ import { getId } from 'src/app/utils/getId.utils';
 import { formatarNome } from 'src/app/utils/formatarNome.utils';
 import { PokeAPIService } from '../pokeapi/pokeapi.service';
 import { IPokemonLista } from 'src/app/components/lista/lista.component';
+import { MAX_ID } from 'src/app/utils/constants.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +25,6 @@ export class BuscaService {
   private valueNomeSubject = new Subject<string>();
   private valueTipoSubject = new Subject<string | null>();
   public isActive = false;
-
-  private readonly MAX_ID = '1025';
 
   constructor(private pokeApi: PokeAPIService) {
     this.setupBusca();
@@ -92,7 +91,7 @@ export class BuscaService {
   }
 
   private getPokemons(): Observable<IPokemonLista[]> {
-    return this.pokeApi.getPokemons('0', this.MAX_ID).pipe(
+    return this.pokeApi.getPokemons('0', MAX_ID.toString()).pipe(
       map((res) => this.formatPokemonLista(res.results)),
       catchError(() => of([]))
     );

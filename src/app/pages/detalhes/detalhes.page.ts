@@ -27,14 +27,21 @@ import {
 } from '@ionic/angular/standalone';
 import { formatarNome, titleCase } from 'src/app/utils/formatarNome.utils';
 import { hifenParaEspaco } from 'src/app/utils/hifenParaEspaco.utils';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
 import { CORES_TIPO } from 'src/app/utils/cores.utils';
+import { MAX_ID } from 'src/app/utils/constants.utils';
 import { addIcons } from 'ionicons';
-import { arrowBackOutline, heart, heartOutline } from 'ionicons/icons';
+import {
+  arrowBackOutline,
+  heart,
+  heartOutline,
+  chevronBack,
+  chevronForward,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-detalhes',
@@ -66,6 +73,7 @@ import { arrowBackOutline, heart, heartOutline } from 'ionicons/icons';
     IonProgressBar,
     IonToast,
     CommonModule,
+    RouterLink,
   ],
 })
 export class DetalhesPage implements OnInit, OnDestroy {
@@ -73,6 +81,7 @@ export class DetalhesPage implements OnInit, OnDestroy {
   isFavorito = false;
   toastMessage = '';
   isToastOpen = false;
+  readonly MAX_ID = MAX_ID;
 
   private favoritosSub: Subscription | undefined;
 
@@ -82,7 +91,13 @@ export class DetalhesPage implements OnInit, OnDestroy {
     private favoritosService: FavoritosService,
     private location: Location
   ) {
-    addIcons({ heart, heartOutline, arrowBackOutline });
+    addIcons({
+      heart,
+      heartOutline,
+      arrowBackOutline,
+      chevronBack,
+      chevronForward,
+    });
   }
 
   ngOnInit() {

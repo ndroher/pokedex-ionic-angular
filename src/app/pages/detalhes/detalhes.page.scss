@@ -25,3 +25,10 @@
     --background: var(--progress-bar-secondary-dark);
   }
 }
+
+.img-detalhes {
+  width: 70%;
+  max-width: 512px;
+  margin: auto;
+  aspect-ratio: 1 / 1;
+}
