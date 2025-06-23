@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { BehaviorSubject } from 'rxjs';
 import { IPokemon } from '../pokeapi/pokeapi.mode';
+import { formatarNome } from 'src/app/utils/formatarNome.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +37,7 @@ export class FavoritosService {
     if (isFavorito) {
       novosFavoritos = favoritos.filter((p) => p.id !== pokemon.id);
     } else {
+      pokemon.name = formatarNome(pokemon.name);
       novosFavoritos = [...favoritos, pokemon];
     }
 
@@ -45,20 +47,6 @@ export class FavoritosService {
     this.favoritosIdsSubject.next(novosIds);
 
     return !isFavorito;
-  }
-
-  async setFavorito(pokemon: IPokemon): Promise<void> {
-    const favoritos = await this.getFavoritos();
-    if (!favoritos.some((p) => p.id === pokemon.id)) {
-      favoritos.push(pokemon);
-      await this._storage?.set('favoritos', favoritos);
-    }
-  }
-
-  async removeFavorito(id: number): Promise<void> {
-    let favoritos = await this.getFavoritos();
-    favoritos = favoritos.filter((p) => p.id !== id);
-    await this._storage?.set('favoritos', favoritos);
   }
 
   async isFavorito(id: number): Promise<boolean> {
