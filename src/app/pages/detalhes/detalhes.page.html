@@ -1,5 +1,5 @@
 <div *ngIf="pokemon">
-  <ion-header [translucent]="true" id="header-id">
+  <ion-header [translucent]="true" id="detalhes-header-id">
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-button (click)="voltar()">
@@ -17,6 +17,7 @@
           <ion-icon
             slot="icon-only"
             [name]="isFavorito ? 'heart' : 'heart-outline'"
+            [color]="isFavorito ? 'danger' : ''"
           />
         </ion-button>
       </ion-buttons>
@@ -144,11 +145,12 @@
       </ion-row>
     </ion-grid>
     <ion-toast
-      trigger="open-toast"
       [message]="toastMessage"
       duration="2000"
       position="top"
-      positionAnchor="header-id"
+      positionAnchor="detalhes-header-id"
+      [isOpen]="isToastOpen"
+      (didDismiss)="setOpenToast(false)"
     />
   </ion-content>
 </div>

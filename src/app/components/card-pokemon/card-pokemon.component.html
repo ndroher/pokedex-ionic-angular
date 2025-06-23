@@ -1,0 +1,43 @@
+<div class="card-wrapper" button [routerLink]="['/detalhes', pokemon.id]">
+  <img
+    class="card-img"
+    [src]="
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/' +
+      pokemon.id +
+      '.png'
+    "
+    [alt]="pokemon.name"
+  />
+
+  <ion-card class="card-info">
+    <div class="card-row">
+      <ion-button
+        (click)="toggleFavorito($event)"
+        fill="clear"
+        shape="round"
+        [color]="isFavorito ? 'danger' : 'medium'"
+      >
+        <ion-icon
+          slot="icon-only"
+          [name]="isFavorito ? 'heart' : 'heart-outline'"
+          class="card-icon"
+        />
+      </ion-button>
+    </div>
+
+    <div class="card-row">
+      <ion-label class="card-nome ion-text-capitalize">
+        {{ pokemon.name }}
+      </ion-label>
+      <ion-label class="card-id">#{{ pokemon.id }}</ion-label>
+    </div>
+  </ion-card>
+  <ion-toast
+    [message]="toastMessage"
+    duration="2000"
+    position="top"
+    [positionAnchor]="toastAnchorId"
+    [isOpen]="isToastOpen"
+    (didDismiss)="setOpenToast(false)"
+  />
+</div>

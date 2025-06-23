@@ -1,0 +1,76 @@
+.card-wrapper {
+  position: relative;
+  margin-top: 60px;
+}
+
+.card-info {
+  position: relative;
+  width: 240px;
+  height: 120px;
+  margin: 0;
+  padding: 1rem;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  backdrop-filter: saturate(180%) blur(20px);
+  border-radius: 10px;
+  border-bottom: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-icon {
+  font-size: 28px;
+}
+
+.card-img {
+  position: absolute;
+  top: -60px;
+  right: 0px;
+  width: 120px;
+  height: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.card-nome {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #2f2f2f;
+}
+
+.card-id {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+:host-context(.md) .card-info {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+:host-context(.ios) .card-info {
+  background: rgba(247, 247, 247, 0.85);
+}
+
+@media (prefers-color-scheme: dark) {
+  :host-context(.md) .card-info {
+    background: rgba(31, 31, 31, 0.85);
+  }
+
+  :host-context(.ios) .card-info {
+    background: rgba(13, 13, 13, 0.85);
+  }
+
+  .card-nome {
+    color: #f6f8fc;
+  }
+}
