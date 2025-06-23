@@ -1,6 +1,7 @@
 .card-wrapper {
   position: relative;
   margin-top: 60px;
+  transition: 0.5s;
 }
 
 .card-info {
@@ -20,6 +21,17 @@
   border-bottom: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  transition: 0.5s;
+}
+
+.card-wrapper:hover {
+  transform: translateY(-6px);
+  .card-img {
+    transform: scale(1.1) rotate3d(1, -1, 1, 15deg);
+  }
+  .card-info {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .card-row {
@@ -40,10 +52,11 @@
   height: 120px;
   z-index: 2;
   pointer-events: none;
+  transition: 0.5s;
 }
 
 .card-nome {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #2f2f2f;
 }
