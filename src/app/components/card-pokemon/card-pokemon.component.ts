@@ -18,6 +18,7 @@ import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
 import { IPokemonLista } from 'src/app/components/lista/lista.component';
+import { CORES_TIPO } from 'src/app/utils/cores.utils';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { addIcons } from 'ionicons';
@@ -46,6 +47,7 @@ export class CardPokemonComponent implements OnInit, OnDestroy {
   imageUrl = '';
   toastMessage = '';
   isToastOpen = false;
+  pokemonInfo: IPokemon | null = null;
 
   private favoritosSubscription: Subscription | undefined;
 
@@ -58,6 +60,11 @@ export class CardPokemonComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     if (!this.pokemon) return;
+    this.pokeapiService
+      .getPokemon(this.pokemon.id.toString())
+      .subscribe((info) => {
+        this.pokemonInfo = info;
+      });
     this.imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${this.pokemon.id}.png`;
     this.favoritosSubscription = this.favoritosService.favoritosIds$.subscribe(
       (ids) => {
@@ -91,5 +98,25 @@ export class CardPokemonComponent implements OnInit, OnDestroy {
 
   setOpenToast(isOpen: boolean) {
     this.isToastOpen = isOpen;
+  }
+
+  getCardStyle(): { [key: string]: string } {
+    let colorSet1 = CORES_TIPO['default'];
+    let colorSet2 = CORES_TIPO['default'];
+
+    if (this.pokemonInfo) {
+      const tipos = this.pokemonInfo.types.map((t) => t.type.name);
+
+      colorSet1 = CORES_TIPO[tipos[0]] || CORES_TIPO['default'];
+
+      colorSet2 = tipos[1]
+        ? CORES_TIPO[tipos[1]] || CORES_TIPO['default']
+        : colorSet1;
+    }
+
+    return {
+      '--card-color-1': colorSet1.primary,
+      '--card-color-2': colorSet2.primary,
+    };
   }
 }

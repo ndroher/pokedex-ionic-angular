@@ -20,7 +20,7 @@ export class BuscaService {
   public isLoading = false;
   public pokemons: IPokemonLista[] = [];
   public valueNome = '';
-  public valueTipo: string | null = null;
+  public valueTipo: string = 'default';
   private valueNomeSubject = new Subject<string>();
   private valueTipoSubject = new Subject<string | null>();
   public isActive = false;
@@ -75,7 +75,7 @@ export class BuscaService {
     this.valueNomeSubject.next(this.valueNome);
   }
 
-  public onFilter(tipo: string | null): void {
+  public onFilter(tipo: string): void {
     this.valueTipo = tipo;
     this.valueTipoSubject.next(tipo);
   }

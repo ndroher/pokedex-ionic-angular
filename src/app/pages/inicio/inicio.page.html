@@ -30,7 +30,8 @@
             [value]="buscaService.valueTipo"
             (ionChange)="onFilter($event)"
             interface="popover"
-            class="toolbar-item-transparent"
+            class="toolbar-item-transparent select highlight"
+            [ngStyle]="getFocusStyle(buscaService.valueTipo)"
           >
             <ion-icon
               slot="start"

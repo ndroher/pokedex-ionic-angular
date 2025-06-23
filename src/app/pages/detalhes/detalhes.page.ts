@@ -32,6 +32,7 @@ import { Subscription } from 'rxjs';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
+import { CORES_TIPO } from 'src/app/utils/cores.utils';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, heart, heartOutline } from 'ionicons/icons';
 
@@ -129,5 +130,25 @@ export class DetalhesPage implements OnInit, OnDestroy {
 
   voltar(): void {
     this.location.back();
+  }
+
+  getBadgeStyle(tipo: string): { [key: string]: string } {
+    const colorSet = CORES_TIPO[tipo] || CORES_TIPO['default'];
+
+    return {
+      '--badge-primary': colorSet.primary,
+      '--badge-secondary-light': colorSet['secondary-light'],
+      '--badge-secondary-dark': colorSet['secondary-dark'],
+    };
+  }
+
+  getProgressBarStyle(tipo: string): { [key: string]: string } {
+    const colorSet = CORES_TIPO[tipo] || CORES_TIPO['default'];
+
+    return {
+      '--progress-bar-primary': colorSet.primary,
+      '--progress-bar-secondary-light': colorSet['secondary-light'],
+      '--progress-bar-secondary-dark': colorSet['secondary-dark'],
+    };
   }
 }

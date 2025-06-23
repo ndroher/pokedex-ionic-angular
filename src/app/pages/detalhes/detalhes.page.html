@@ -61,9 +61,9 @@
             <div style="display: flex; gap: 8px">
               <ion-badge
                 *ngFor="let data of pokemon.types"
-                class="ion-text-capitalize"
+                class="ion-text-capitalize badge"
                 style="font-size: 1rem; padding: 8px 12px"
-                color="light"
+                [ngStyle]="getBadgeStyle(data.type.name)"
               >
                 {{ data.type.name }}
               </ion-badge>
@@ -129,7 +129,11 @@
                       width: 50%;
                     "
                   >
-                    <ion-progress-bar [value]="data.base_stat / 120" />
+                    <ion-progress-bar
+                      [value]="data.base_stat / 120"
+                      [ngStyle]="getProgressBarStyle(pokemon.types[0].type.name)"
+                      class="progress-bar"
+                    />
                     <ion-text
                       class="ion-text-right"
                       style="font-weight: bold; min-width: 3ch"

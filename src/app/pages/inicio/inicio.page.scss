@@ -58,3 +58,9 @@
   align-items: center;
   gap: 12px;
 }
+
+.highlight {
+  --highlight-height: 0px;
+  border-bottom: 2px solid var(--highlight-color);
+  transition: border-color 0.5s ease-in-out;
+}

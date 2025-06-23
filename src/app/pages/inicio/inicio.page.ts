@@ -28,6 +28,7 @@ import { BuscaService } from 'src/app/services/busca/busca.service';
 import { addIcons } from 'ionicons';
 import { pricetag } from 'ionicons/icons';
 import { PokemonTypes } from 'src/app/services/pokeapi/pokeapi.mode';
+import { CORES_TIPO } from 'src/app/utils/cores.utils';
 
 @Component({
   selector: 'app-inicio',
@@ -105,5 +106,19 @@ export class InicioPage implements OnInit {
           if (res.next === null) event.target.disabled = true;
         }
       });
+  }
+
+  getFocusStyle(tipo: string): { [key: string]: string } {
+    if (tipo === 'default' || tipo === null) {
+      return {
+        '--highlight-color': 'none',
+      };
+    }
+
+    const colorSet = CORES_TIPO[tipo] || CORES_TIPO['default'];
+
+    return {
+      '--highlight-color': colorSet.primary,
+    };
   }
 }

@@ -24,6 +24,47 @@
   transition: 0.5s;
 }
 
+.card-info::before,
+.card-info::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.card-info::before {
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--card-color-1),
+    var(--card-color-2),
+    transparent
+  );
+  opacity: 1;
+}
+
+.card-info:hover::before {
+  opacity: 0;
+}
+
+.card-info::after {
+  background: linear-gradient(
+    to right,
+    var(--card-color-1),
+    var(--card-color-1),
+    var(--card-color-2),
+    var(--card-color-2)
+  );
+  opacity: 0;
+}
+
+.card-info:hover::after {
+  opacity: 1;
+}
+
 .card-wrapper:hover {
   transform: translateY(-6px);
   .card-img {

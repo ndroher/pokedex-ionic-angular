@@ -9,7 +9,7 @@
     [alt]="pokemon.name"
   />
 
-  <ion-card class="card-info">
+  <ion-card class="card-info" [ngStyle]="getCardStyle()">
     <div class="card-row">
       <ion-button
         (click)="toggleFavorito($event)"
