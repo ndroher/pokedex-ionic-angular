@@ -26,20 +26,176 @@
   }
 }
 
-.img-detalhes {
+.header-collapse-condense ion-toolbar {
+  --background: transparent;
+}
+
+.main-style {
+  backdrop-filter: saturate(180%) blur(20px);
+  border-radius: 10px;
+  border-bottom: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+:host-context(.md) .main-style {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+:host-context(.ios) .main-style {
+  background: rgba(247, 247, 247, 0.85);
+}
+
+@media (prefers-color-scheme: dark) {
+  :host-context(.md) .main-style {
+    background: rgba(31, 31, 31, 0.85);
+  }
+
+  :host-context(.ios) .main-style {
+    background: rgba(13, 13, 13, 0.85);
+  }
+
+  .card-nome {
+    color: #f6f8fc;
+  }
+}
+
+.bg-transparent {
+  background: transparent;
+  --background: transparent;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  &.bold {
+    font-weight: bold;
+  }
+}
+
+.bg-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-img {
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  border: none;
+  background: transparent;
+}
+
+.bg-ring-1,
+.bg-ring-2,
+.bg-ring-3 {
+  display: block;
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  width: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--ring-color-1);
+  border-radius: 50%;
+  background: transparent;
+  animation: rings-breathe 6s ease-out infinite;
+}
+
+.bg-ring-1 {
+  width: 50%;
+  animation-delay: -4s;
+}
+
+.bg-ring-2 {
+  width: 70%;
+  animation-delay: -2s;
+  border: 2px solid var(--ring-color-2);
+}
+
+.parallax-container {
+  perspective: 600px;
+  display: inline-block;
   width: 70%;
   max-width: 512px;
   margin: auto;
   aspect-ratio: 1 / 1;
+  position: relative;
+  z-index: 2;
 }
 
-.img-detalhes::part(image) {
+.parallax-img {
+  transform-style: preserve-3d;
+  animation: natural-gaze 21s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+.parallax-img::part(image) {
   opacity: 0;
-  transform: scale(0.1);
+  transform: scale(0);
   transition: 0.5s ease-in-out;
 }
 
-.img-detalhes.is-loaded::part(image) {
+.parallax-img.is-loaded::part(image) {
   opacity: 1;
   transform: scale(1);
+}
+
+@keyframes rings-breathe {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes natural-gaze {
+  // centro
+  0% {
+    transform: translate3d(0, 0, 0) rotateX(0) rotateY(0);
+  }
+
+  // baixo esquerda
+  15% {
+    transform: translate3d(-5px, 5px, -10px) rotateX(-5deg) rotateY(-10deg);
+  }
+
+  // cima esquerda
+  30% {
+    transform: translate3d(-10px, -5px, -5px) rotateX(5deg) rotateY(-10deg);
+  }
+
+  // centro
+  45% {
+    transform: translate3d(0, 0, 0) rotateX(0) rotateY(0);
+  }
+
+  // cima direita
+  65% {
+    transform: translate3d(10px, -10px, 0) rotateX(5deg) rotateY(10deg);
+  }
+
+  // baixo direita
+  85% {
+    transform: translate3d(5px, 5px, -10px) rotateX(-5deg) rotateY(10deg);
+  }
+
+  // centro
+  100% {
+    transform: translate3d(0, 0, 0) rotateX(0) rotateY(0);
+  }
 }

@@ -42,6 +42,11 @@ import {
   heartOutline,
   chevronBack,
   chevronForward,
+  statsChart,
+  bonfire,
+  eyeOff,
+  resize,
+  barbell,
 } from 'ionicons/icons';
 
 @Component({
@@ -101,6 +106,11 @@ export class DetalhesPage extends AriaFocusFixer implements OnInit, OnDestroy {
       arrowBackOutline,
       chevronBack,
       chevronForward,
+      statsChart,
+      bonfire,
+      eyeOff,
+      resize,
+      barbell,
     });
   }
 
@@ -177,6 +187,26 @@ export class DetalhesPage extends AriaFocusFixer implements OnInit, OnDestroy {
       '--progress-bar-primary': colorSet.primary,
       '--progress-bar-secondary-light': colorSet['secondary-light'],
       '--progress-bar-secondary-dark': colorSet['secondary-dark'],
+    };
+  }
+
+  getRingStyle(): { [key: string]: string } {
+    let colorSet1 = CORES_TIPO['default'];
+    let colorSet2 = CORES_TIPO['default'];
+
+    if (this.pokemon) {
+      const tipos = this.pokemon.types.map((t) => t.type.name);
+
+      colorSet1 = CORES_TIPO[tipos[0]] || CORES_TIPO['default'];
+
+      colorSet2 = tipos[1]
+        ? CORES_TIPO[tipos[1]] || CORES_TIPO['default']
+        : colorSet1;
+    }
+
+    return {
+      '--ring-color-1': colorSet1.primary,
+      '--ring-color-2': colorSet2.primary,
     };
   }
 
