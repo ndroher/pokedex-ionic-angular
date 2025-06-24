@@ -54,9 +54,11 @@
             <ion-icon slot="icon-only" name="chevron-back" />
           </ion-button>
           <ion-img
+            *ngIf="showImg"
             [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/' + pokemon.id + '.png'"
             [alt]="pokemon.name"
             class="img-detalhes"
+            (ionImgDidLoad)="onImgLoad($event)"
           />
           <ion-button
             fill="clear"

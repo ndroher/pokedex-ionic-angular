@@ -81,9 +81,11 @@ export class DetalhesPage implements OnInit, OnDestroy {
   isFavorito = false;
   toastMessage = '';
   isToastOpen = false;
+  showImg = false;
   readonly MAX_ID = MAX_ID;
 
-  private favoritosSub: Subscription | undefined;
+  private favoritosSub?: Subscription;
+  private routeSub?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -101,8 +103,10 @@ export class DetalhesPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
+    this.routeSub = this.route.params.subscribe((params) => {
+      const id = params['id'];
+      if (!id) return;
+      this.showImg = false;
       this.pokeapiService.getPokemon(id).subscribe(async (res) => {
         this.pokemon = res;
         this.pokemon.name = formatarNome(this.pokemon.name);
@@ -112,6 +116,7 @@ export class DetalhesPage implements OnInit, OnDestroy {
         this.pokemon.stats.forEach(
           (p) => (p.stat.name = hifenParaEspaco(p.stat.name))
         );
+        if (this.favoritosSub) this.favoritosSub.unsubscribe();
         this.favoritosSub = this.favoritosService.favoritosIds$.subscribe(
           (ids) => {
             if (this.pokemon) {
@@ -119,12 +124,14 @@ export class DetalhesPage implements OnInit, OnDestroy {
             }
           }
         );
+        this.showImg = true;
       });
-    }
+    });
   }
 
   ngOnDestroy() {
     this.favoritosSub?.unsubscribe();
+    this.routeSub?.unsubscribe();
   }
 
   async toggleFavorito() {
@@ -169,5 +176,9 @@ export class DetalhesPage implements OnInit, OnDestroy {
       '--progress-bar-secondary-light': colorSet['secondary-light'],
       '--progress-bar-secondary-dark': colorSet['secondary-dark'],
     };
+  }
+
+  onImgLoad(event: any) {
+    event.target.classList.add('is-loaded');
   }
 }

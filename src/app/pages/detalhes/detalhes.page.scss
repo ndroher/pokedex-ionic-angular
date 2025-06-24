@@ -32,3 +32,14 @@
   margin: auto;
   aspect-ratio: 1 / 1;
 }
+
+.img-detalhes::part(image) {
+  opacity: 0;
+  transform: scale(0.1);
+  transition: 0.5s ease-in-out;
+}
+
+.img-detalhes.is-loaded::part(image) {
+  opacity: 1;
+  transform: scale(1);
+}
