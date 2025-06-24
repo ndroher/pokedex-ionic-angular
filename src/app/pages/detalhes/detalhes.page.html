@@ -38,26 +38,53 @@
 
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-md="8" size-lg="6">
-          <ion-img
-            [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/' + pokemon.id + '.png'"
-            [alt]="pokemon.name"
-            style="width: 70%; max-width: 512px; margin: auto"
-          />
+        <ion-col
+          size="12"
+          size-md="8"
+          size-lg="6"
+          class="ion-text-center bg-container"
+        >
+          <ion-button
+            fill="clear"
+            shape="round"
+            [routerLink]="['/detalhes', pokemon.id - 1]"
+            [disabled]="pokemon.id === 1"
+            color="medium"
+          >
+            <ion-icon slot="icon-only" name="chevron-back" />
+          </ion-button>
+          <div class="bg-img" [ngStyle]="getRingStyle()">
+            <span class="bg-ring-1"></span>
+            <span class="bg-ring-2"></span>
+            <span class="bg-ring-3"></span>
+          </div>
+          <div class="parallax-container">
+            <ion-img
+              *ngIf="showImg"
+              [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/' + pokemon.id + '.png'"
+              [alt]="pokemon.name"
+              class="parallax-img"
+              (ionImgDidLoad)="onImgLoad($event)"
+            />
+          </div>
+          <ion-button
+            fill="clear"
+            shape="round"
+            [routerLink]="['/detalhes', pokemon.id + 1]"
+            [disabled]="pokemon.id === MAX_ID"
+            color="medium"
+          >
+            <ion-icon slot="icon-only" name="chevron-forward" />
+          </ion-button>
         </ion-col>
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
         <ion-col size="12" size-md="8" size-lg="6" class="ion-padding">
           <div
-            class="ion-justify-content-between ion-align-items-end"
+            class="ion-justify-content-center ion-align-items-center"
             style="display: flex"
           >
-            <ion-text>
-              <h5 class="ion-no-margin" style="font-weight: bold">Altura</h5>
-              <p class="ion-no-margin">{{ pokemon.height / 10 }}m</p>
-            </ion-text>
-
             <div style="display: flex; gap: 8px">
               <ion-badge
                 *ngFor="let data of pokemon.types"
@@ -68,32 +95,62 @@
                 {{ data.type.name }}
               </ion-badge>
             </div>
+          </div>
+        </ion-col>
+      </ion-row>
 
-            <ion-text class="ion-text-right">
-              <h5 class="ion-no-margin" style="font-weight: bold">Peso</h5>
-              <p class="ion-no-margin">{{ pokemon.weight / 10 }}kg</p>
-            </ion-text>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-md="8" size-lg="6" class="ion-padding">
+          <div
+            class="ion-justify-content-between ion-align-items-end"
+            style="display: flex"
+          >
+            <div style="display: flex; align-items: center; gap: 12px">
+              <ion-icon name="resize" aria-hidden="true" size="large" />
+              <ion-text>
+                <h5 class="ion-no-margin" style="font-weight: bold">Altura</h5>
+                <p class="ion-no-margin">{{ pokemon.height / 10 }}m</p>
+              </ion-text>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px">
+              <ion-icon name="barbell" aria-hidden="true" size="large" />
+              <ion-text class="ion-text-right">
+                <h5 class="ion-no-margin" style="font-weight: bold">Peso</h5>
+                <p class="ion-no-margin">{{ pokemon.weight / 10 }}kg</p>
+              </ion-text>
+            </div>
           </div>
         </ion-col>
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
         <ion-col size="12" size-md="8" size-lg="6">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title style="font-weight: bold">
-                Habilidades
+          <ion-card class="main-style">
+            <ion-card-header class="padding-card">
+              <ion-card-title class="card-title bold">
+                <ion-icon name="bonfire" aria-hidden="true" />
+                <span>Habilidades</span>
               </ion-card-title>
             </ion-card-header>
 
-            <ion-card-content class="ion-no-padding">
-              <ion-list>
+            <ion-card-content>
+              <ion-list class="bg-transparent">
                 <ion-item
                   *ngFor="let data of pokemon.abilities; let isLast = last"
                   [lines]="isLast ? 'none' : 'full'"
+                  class="bg-transparent"
                 >
-                  <ion-label class="ion-text-capitalize">
-                    {{ data.ability.name }}
+                  <ion-label class="ion-text-capitalize" class="card-title">
+                    <span class="ion-text-capitalize"
+                      >{{ data.ability.name }}</span
+                    >
+                    <ion-icon
+                      *ngIf="data.is_hidden"
+                      color="medium"
+                      name="eye-off"
+                      aria-hidden="true"
+                    />
                   </ion-label>
                 </ion-item>
               </ion-list>
@@ -104,16 +161,20 @@
 
       <ion-row class="ion-justify-content-center">
         <ion-col size="12" size-md="8" size-lg="6">
-          <ion-card>
+          <ion-card class="main-style">
             <ion-card-header>
-              <ion-card-title style="font-weight: bold">
-                Estatísticas
+              <ion-card-title class="card-title bold">
+                <ion-icon name="stats-chart" aria-hidden="true" />
+                <span>Estatísticas</span>
               </ion-card-title>
             </ion-card-header>
 
             <ion-card-content class="ion-no-padding">
-              <ion-list lines="none">
-                <ion-item *ngFor="let data of pokemon.stats">
+              <ion-list lines="none" class="bg-transparent">
+                <ion-item
+                  *ngFor="let data of pokemon.stats"
+                  class="bg-transparent"
+                >
                   <ion-label
                     class="ion-text-capitalize"
                     style="text-wrap: nowrap"

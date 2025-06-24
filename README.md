@@ -125,12 +125,12 @@ https://pokedex-ionic-angular.netlify.app/
 - [x] Filtos
   - [x] Implementar busca por nome do Pokémon
   - [x] Implementar busca por tipo do Pokémon
-- [ ] Interface
+- [x] Interface
   - [x] Criar cards para a lista Pokémons
   - [x] Adicionar cores relativas aos tipos
   - [x] Adicionar animações
   - [x] Formatar nomes de Pokémons e habilidades
-  - [ ] Implementar botão em detalhes para navegar para Pokémon anterior e seguinte
+  - [x] Implementar botão em detalhes para navegar entre Pokémons
 - [ ] Atualizar README.md
 
 <br><br><br>
