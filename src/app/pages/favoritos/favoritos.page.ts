@@ -12,6 +12,7 @@ import {
   IPokemonLista,
 } from 'src/app/components/lista/lista.component';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
+import { AriaFocusFixer } from 'src/app/utils/AriaFocusFixer.utils';
 
 @Component({
   selector: 'app-favoritos',
@@ -27,10 +28,12 @@ import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
     CommonModule,
   ],
 })
-export class FavoritosPage {
+export class FavoritosPage extends AriaFocusFixer {
   pokemons: IPokemonLista[] = [];
 
-  constructor(private favoritosService: FavoritosService) {}
+  constructor(private favoritosService: FavoritosService) {
+    super();
+  }
 
   async ionViewWillEnter() {
     this.pokemons = await this.favoritosService.getFavoritos();

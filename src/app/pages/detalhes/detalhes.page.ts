@@ -34,6 +34,7 @@ import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
 import { CORES_TIPO } from 'src/app/utils/cores.utils';
 import { MAX_ID } from 'src/app/utils/constants.utils';
+import { AriaFocusFixer } from 'src/app/utils/AriaFocusFixer.utils';
 import { addIcons } from 'ionicons';
 import {
   arrowBackOutline,
@@ -76,7 +77,7 @@ import {
     RouterLink,
   ],
 })
-export class DetalhesPage implements OnInit, OnDestroy {
+export class DetalhesPage extends AriaFocusFixer implements OnInit, OnDestroy {
   pokemon?: IPokemon;
   isFavorito = false;
   toastMessage = '';
@@ -93,6 +94,7 @@ export class DetalhesPage implements OnInit, OnDestroy {
     private favoritosService: FavoritosService,
     private location: Location
   ) {
+    super();
     addIcons({
       heart,
       heartOutline,

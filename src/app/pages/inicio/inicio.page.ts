@@ -29,6 +29,7 @@ import { addIcons } from 'ionicons';
 import { pricetag } from 'ionicons/icons';
 import { PokemonTypes } from 'src/app/services/pokeapi/pokeapi.mode';
 import { CORES_TIPO } from 'src/app/utils/cores.utils';
+import { AriaFocusFixer } from 'src/app/utils/AriaFocusFixer.utils';
 
 @Component({
   selector: 'app-inicio',
@@ -54,7 +55,7 @@ import { CORES_TIPO } from 'src/app/utils/cores.utils';
     CommonModule,
   ],
 })
-export class InicioPage implements OnInit {
+export class InicioPage extends AriaFocusFixer implements OnInit {
   pokemons: IPokemonLista[] = [];
   offset = 0;
   limit = 20;
@@ -65,6 +66,7 @@ export class InicioPage implements OnInit {
     private pokeapiService: PokeAPIService,
     public buscaService: BuscaService
   ) {
+    super();
     addIcons({ pricetag });
   }
 
