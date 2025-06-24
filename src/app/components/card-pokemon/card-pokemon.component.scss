@@ -21,7 +21,6 @@
   border-bottom: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: 0.5s;
 }
 
 .card-info::before,
@@ -115,16 +114,14 @@
   background: rgba(247, 247, 247, 0.85);
 }
 
-@media (prefers-color-scheme: dark) {
-  :host-context(.md) .card-info {
-    background: rgba(31, 31, 31, 0.85);
-  }
+:host-context(html.ion-palette-dark.md) .card-info {
+  background: rgba(31, 31, 31, 0.85);
+}
 
-  :host-context(.ios) .card-info {
-    background: rgba(13, 13, 13, 0.85);
-  }
+:host-context(html.ion-palette-dark.ios) .card-info {
+  background: rgba(13, 13, 13, 0.85);
+}
 
-  .card-nome {
-    color: #f6f8fc;
-  }
+:host-context(html.ion-palette-dark) .card-nome {
+  color: var(--ion-color-light);
 }

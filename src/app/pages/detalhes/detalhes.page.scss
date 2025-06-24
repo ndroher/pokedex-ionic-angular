@@ -9,10 +9,8 @@
   color: var(--badge-primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  .badge {
-    background-color: var(--badge-secondary-dark);
-  }
+:host-context(html.ion-palette-dark) .badge {
+  background-color: var(--badge-secondary-dark);
 }
 
 .progress-bar {
@@ -20,10 +18,8 @@
   --background: var(--progress-bar-secondary-light);
 }
 
-@media (prefers-color-scheme: dark) {
-  .progress-bar {
-    --background: var(--progress-bar-secondary-dark);
-  }
+:host-context(html.ion-palette-dark) .progress-bar {
+  --background: var(--progress-bar-secondary-dark);
 }
 
 .header-collapse-condense ion-toolbar {
@@ -47,18 +43,12 @@
   background: rgba(247, 247, 247, 0.85);
 }
 
-@media (prefers-color-scheme: dark) {
-  :host-context(.md) .main-style {
-    background: rgba(31, 31, 31, 0.85);
-  }
+:host-context(html.ion-palette-dark.md) .main-style {
+  background: rgba(31, 31, 31, 0.85);
+}
 
-  :host-context(.ios) .main-style {
-    background: rgba(13, 13, 13, 0.85);
-  }
-
-  .card-nome {
-    color: #f6f8fc;
-  }
+:host-context(html.ion-palette-dark.ios) .main-style {
+  background: rgba(13, 13, 13, 0.85);
 }
 
 .bg-transparent {

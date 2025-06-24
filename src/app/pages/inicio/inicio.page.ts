@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
+  IonButtons,
+  IonButton,
   IonTitle,
   IonContent,
   IonSpinner,
@@ -26,7 +28,7 @@ import { formatarNome } from 'src/app/utils/formatarNome.utils';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { BuscaService } from 'src/app/services/busca/busca.service';
 import { addIcons } from 'ionicons';
-import { pricetag } from 'ionicons/icons';
+import { pricetag, moon, sunny } from 'ionicons/icons';
 import { PokemonTypes } from 'src/app/services/pokeapi/pokeapi.mode';
 import { CORES_TIPO } from 'src/app/utils/cores.utils';
 import { AriaFocusFixer } from 'src/app/utils/AriaFocusFixer.utils';
@@ -38,6 +40,8 @@ import { AriaFocusFixer } from 'src/app/utils/AriaFocusFixer.utils';
   imports: [
     IonHeader,
     IonToolbar,
+    IonButtons,
+    IonButton,
     IonTitle,
     IonContent,
     ListaComponent,
@@ -56,6 +60,7 @@ import { AriaFocusFixer } from 'src/app/utils/AriaFocusFixer.utils';
   ],
 })
 export class InicioPage extends AriaFocusFixer implements OnInit {
+  paletteToggle = false;
   pokemons: IPokemonLista[] = [];
   offset = 0;
   limit = 20;
@@ -67,10 +72,15 @@ export class InicioPage extends AriaFocusFixer implements OnInit {
     public buscaService: BuscaService
   ) {
     super();
-    addIcons({ pricetag });
+    addIcons({ pricetag, moon, sunny });
   }
 
   ngOnInit(): void {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    this.initializeDarkPalette(prefersDark.matches);
+    prefersDark.addEventListener('change', (mediaQuery) =>
+      this.initializeDarkPalette(mediaQuery.matches)
+    );
     this.loadPokemons();
   }
 
@@ -122,5 +132,19 @@ export class InicioPage extends AriaFocusFixer implements OnInit {
     return {
       '--highlight-color': colorSet.primary,
     };
+  }
+
+  initializeDarkPalette(isDark: boolean) {
+    this.paletteToggle = isDark;
+    this.toggleDarkPalette(isDark);
+  }
+
+  toggleChange() {
+    this.paletteToggle = !this.paletteToggle;
+    this.toggleDarkPalette(this.paletteToggle);
+  }
+
+  toggleDarkPalette(shouldAdd: boolean) {
+    document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
   }
 }

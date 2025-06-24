@@ -1,6 +1,16 @@
 <ion-header [translucent]="true" id="inicio-header-id">
   <ion-toolbar>
     <ion-title> Início </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleChange()">
+        <ion-icon
+          (ngModel)="paletteToggle"
+          slot="icon-only"
+          [name]="paletteToggle ? 'moon' : 'sunny'"
+          [color]="paletteToggle ? 'light' : 'dark'"
+        />
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

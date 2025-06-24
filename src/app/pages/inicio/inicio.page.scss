@@ -42,14 +42,12 @@
   background: rgba(247, 247, 247, 0.85);
 }
 
-@media (prefers-color-scheme: dark) {
-  .md .toolbar-item-wrapper {
-    background: rgba(31, 31, 31, 0.85);
-  }
+:host-context(html.ion-palette-dark.md) .toolbar-item-wrapper {
+  background: rgba(31, 31, 31, 0.85);
+}
 
-  .ios .toolbar-item-wrapper {
-    background: rgba(13, 13, 13, 0.85);
-  }
+:host-context(html.ion-palette-dark.ios) .toolbar-item-wrapper {
+  background: rgba(13, 13, 13, 0.85);
 }
 
 .flex-center {
