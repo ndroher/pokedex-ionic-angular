@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 import {
   IonHeader,
   IonToolbar,
@@ -27,6 +28,7 @@ import { getId } from 'src/app/utils/getId.utils';
 import { formatarNome } from 'src/app/utils/formatarNome.utils';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { BuscaService } from 'src/app/services/busca/busca.service';
+import { TabEventsService } from 'src/app/services/tab-events/tab-events.service';
 import { addIcons } from 'ionicons';
 import { pricetag, moon, sunny } from 'ionicons/icons';
 import { PokemonTypes } from 'src/app/services/pokeapi/pokeapi.mode';
@@ -60,6 +62,9 @@ import { AriaFocusFixer } from 'src/app/utils/AriaFocusFixer.utils';
   ],
 })
 export class InicioPage extends AriaFocusFixer implements OnInit {
+  @ViewChild(IonContent) content!: IonContent;
+  private tabsSubscription!: Subscription;
+
   paletteToggle = false;
   pokemons: IPokemonLista[] = [];
   offset = 0;
@@ -69,7 +74,8 @@ export class InicioPage extends AriaFocusFixer implements OnInit {
 
   constructor(
     private pokeapiService: PokeAPIService,
-    public buscaService: BuscaService
+    public buscaService: BuscaService,
+    private tabEventsService: TabEventsService
   ) {
     super();
     addIcons({ pricetag, moon, sunny });
@@ -81,7 +87,19 @@ export class InicioPage extends AriaFocusFixer implements OnInit {
     prefersDark.addEventListener('change', (mediaQuery) =>
       this.initializeDarkPalette(mediaQuery.matches)
     );
+
+    this.tabsSubscription = this.tabEventsService.tabClicked$.subscribe(
+      (tabName) => {
+        if (tabName === 'inicio')
+          this.tabEventsService.scrollToTop(this.content);
+      }
+    );
+
     this.loadPokemons();
+  }
+
+  ngOnDestroy() {
+    if (this.tabsSubscription) this.tabsSubscription.unsubscribe();
   }
 
   onSearch(event: any) {
