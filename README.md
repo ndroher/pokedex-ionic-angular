@@ -24,7 +24,9 @@
 `/inicio/`
 
 - Lista todos os Pokémons, exibindo Imagem, Nome e Id.
-- Filtrado para ignorar variações, exibindo apenas os 1025 Pokémons em sua forma original.
+- Permite pesquisar por nome.
+- Permite filtrar por tipo.
+- Ignora variações, exibindo apenas os 1025 Pokémons em sua forma original.
 
 > e.g. "#448 Lucario" é exibido, "#10059 mega-lucario" não.
 
@@ -32,7 +34,7 @@
 
 `/detalhes/:id`
 
-Exibe detalhes de um Pokémon específico.
+Exibe detalhes de um Pokémon específico e permite adicionar/remover dos favoritos.
 
 > - Id
 > - Nome
@@ -48,7 +50,7 @@ Exibe detalhes de um Pokémon específico.
 `/favoritos/`
 
 - Exibe os Pokémons que o usuário adicionou à sua lista de favoritos.
-- Utiliza o Ionic Storage ([@ionic/storage](https://github.com/ionic-team/ionic-storage)) para armazenar os dados no IndexedDB e localStorage.
+- Utiliza o Ionic Storage ([@ionic/storage](https://github.com/ionic-team/ionic-storage)) para armazenar os dados no IndexedDB.
 
 ## Boas Práticas
 
@@ -56,19 +58,25 @@ Exibe detalhes de um Pokémon específico.
 
 #### /components/
 
-Componentes utilizados no projeto
+Componentes utilizados no projeto.
 
-> e.g. `Lista`, utilizado nas páginas `Início` e `Favoritos` para exibir uma lista de Pokémons com imagem, id e nome.
+`Lista`
+
+Utilizado nas páginas `Início` e `Favoritos` para exibir uma lista de Pokémons utilizando componente `CardPokemon`.
+
+`CardPokemon`
+
+Exibe Nome, Imagem e Id de um Pokémon e permite adicionar/remover dos favoritos.
 
 #### /pages/
 
-Páginas do projeto
+Páginas do projeto.
 
 > e.g. `Início`, `Detalhes` e `Favoritos`.
 
 #### /services/
 
-Serviços do projeto
+Serviços do projeto.
 
 `PokeAPI`
 
@@ -82,7 +90,7 @@ Obtém dados da API pública [PokéAPI](https://pokeapi.co/).
 
 `Favoritos`
 
-Gerencia os favoritos utilizando [@ionic/storage](https://github.com/ionic-team/ionic-storage)
+Gerencia os favoritos.
 
 > getFavoritos() obtém a lista de favoritos.
 
@@ -93,6 +101,18 @@ Gerencia os favoritos utilizando [@ionic/storage](https://github.com/ionic-team/
 `Busca`
 
 Realiza busca por Nome e/ou Tipo do Pokémon.
+
+`Storage`
+
+Gerencia o [@ionic/storage](https://github.com/ionic-team/ionic-storage).
+
+`Theme`
+
+Gerencia a preferência do usuário entre modo claro e modo escuro.
+
+`TabEvents`
+
+Utilizado para realizar a funcionalidade de ScrollToTop utilizando os botões das tabs.
 
 #### /tabs/
 
@@ -131,7 +151,6 @@ https://pokedex-ionic-angular.netlify.app/
   - [x] Adicionar animações
   - [x] Formatar nomes de Pokémons e habilidades
   - [x] Implementar botão em detalhes para navegar entre Pokémons
-- [ ] Atualizar README.md
 
 <br><br><br>
 
