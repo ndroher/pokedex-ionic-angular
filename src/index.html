@@ -4,6 +4,22 @@
     <meta charset="utf-8" />
     <title>Pokédex Ionic + Angular</title>
 
+    <script>
+      const theme = localStorage.getItem("theme");
+      if (theme) {
+        document.documentElement.classList.toggle(
+          "ion-palette-dark",
+          theme === "dark"
+        );
+      } else {
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+        document.documentElement.classList.toggle(
+          "ion-palette-dark",
+          prefersDark.matches
+        );
+      }
+    </script>
+
     <base href="/" />
 
     <meta name="color-scheme" content="light dark" />

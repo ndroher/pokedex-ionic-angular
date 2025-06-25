@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
+import { Subscription, Observable } from 'rxjs';
 import {
   IonHeader,
   IonToolbar,
@@ -28,9 +29,9 @@ import {
 import { formatarNome, titleCase } from 'src/app/utils/formatarNome.utils';
 import { hifenParaEspaco } from 'src/app/utils/hifenParaEspaco.utils';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { FavoritosService } from 'src/app/services/favoritos/favoritos.service';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 import { IPokemon } from 'src/app/services/pokeapi/pokeapi.mode';
 import { CORES_TIPO } from 'src/app/utils/cores.utils';
 import { MAX_ID } from 'src/app/utils/constants.utils';
@@ -83,6 +84,8 @@ import {
   ],
 })
 export class DetalhesPage extends AriaFocusFixer implements OnInit, OnDestroy {
+  isDarkMode$: Observable<boolean>;
+
   pokemon?: IPokemon;
   isFavorito = false;
   toastMessage = '';
@@ -97,9 +100,11 @@ export class DetalhesPage extends AriaFocusFixer implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private pokeapiService: PokeAPIService,
     private favoritosService: FavoritosService,
-    private location: Location
+    private location: Location,
+    private themeService: ThemeService
   ) {
     super();
+    this.isDarkMode$ = this.themeService.paletteToggle$;
     addIcons({
       heart,
       heartOutline,
