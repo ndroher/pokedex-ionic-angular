@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription, Observable } from 'rxjs';
 import {
   IonHeader,
   IonToolbar,
@@ -27,6 +28,8 @@ import { getId } from 'src/app/utils/getId.utils';
 import { formatarNome } from 'src/app/utils/formatarNome.utils';
 import { PokeAPIService } from 'src/app/services/pokeapi/pokeapi.service';
 import { BuscaService } from 'src/app/services/busca/busca.service';
+import { TabEventsService } from 'src/app/services/tab-events/tab-events.service';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 import { addIcons } from 'ionicons';
 import { pricetag, moon, sunny } from 'ionicons/icons';
 import { PokemonTypes } from 'src/app/services/pokeapi/pokeapi.mode';
@@ -60,6 +63,11 @@ import { AriaFocusFixer } from 'src/app/utils/AriaFocusFixer.utils';
   ],
 })
 export class InicioPage extends AriaFocusFixer implements OnInit {
+  isDarkMode$: Observable<boolean>;
+
+  @ViewChild(IonContent) content!: IonContent;
+  private tabsSubscription!: Subscription;
+
   paletteToggle = false;
   pokemons: IPokemonLista[] = [];
   offset = 0;
@@ -69,19 +77,28 @@ export class InicioPage extends AriaFocusFixer implements OnInit {
 
   constructor(
     private pokeapiService: PokeAPIService,
-    public buscaService: BuscaService
+    public buscaService: BuscaService,
+    private tabEventsService: TabEventsService,
+    private themeService: ThemeService
   ) {
     super();
     addIcons({ pricetag, moon, sunny });
+    this.isDarkMode$ = this.themeService.paletteToggle$;
   }
 
   ngOnInit(): void {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    this.initializeDarkPalette(prefersDark.matches);
-    prefersDark.addEventListener('change', (mediaQuery) =>
-      this.initializeDarkPalette(mediaQuery.matches)
+    this.tabsSubscription = this.tabEventsService.tabClicked$.subscribe(
+      (tabName) => {
+        if (tabName === 'inicio')
+          this.tabEventsService.scrollToTop(this.content);
+      }
     );
+
     this.loadPokemons();
+  }
+
+  ngOnDestroy() {
+    if (this.tabsSubscription) this.tabsSubscription.unsubscribe();
   }
 
   onSearch(event: any) {
@@ -134,17 +151,7 @@ export class InicioPage extends AriaFocusFixer implements OnInit {
     };
   }
 
-  initializeDarkPalette(isDark: boolean) {
-    this.paletteToggle = isDark;
-    this.toggleDarkPalette(isDark);
-  }
-
-  toggleChange() {
-    this.paletteToggle = !this.paletteToggle;
-    this.toggleDarkPalette(this.paletteToggle);
-  }
-
-  toggleDarkPalette(shouldAdd: boolean) {
-    document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
+  toggleTheme() {
+    this.themeService.togglePalette();
   }
 }

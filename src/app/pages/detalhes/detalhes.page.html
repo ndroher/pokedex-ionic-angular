@@ -1,5 +1,5 @@
 <div *ngIf="pokemon">
-  <ion-header [translucent]="true" id="detalhes-header-id">
+  <ion-header [translucent]="true" [id]="'detalhes-header-' + pokemon.id">
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-button (click)="voltar()">
@@ -213,9 +213,10 @@
       [message]="toastMessage"
       duration="2000"
       position="top"
-      positionAnchor="detalhes-header-id"
+      [positionAnchor]="'detalhes-header-' + pokemon.id"
       [isOpen]="isToastOpen"
       (didDismiss)="setOpenToast(false)"
+      mode="ios"
     />
   </ion-content>
 </div>

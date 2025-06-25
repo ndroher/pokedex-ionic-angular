@@ -2,12 +2,11 @@
   <ion-toolbar>
     <ion-title> Início </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="toggleChange()">
+      <ion-button (click)="toggleTheme()">
         <ion-icon
-          (ngModel)="paletteToggle"
           slot="icon-only"
-          [name]="paletteToggle ? 'moon' : 'sunny'"
-          [color]="paletteToggle ? 'light' : 'dark'"
+          [name]="(isDarkMode$ | async) ? 'moon' : 'sunny'"
+          [color]="(isDarkMode$ | async) ? 'light' : 'dark'"
         />
       </ion-button>
     </ion-buttons>
