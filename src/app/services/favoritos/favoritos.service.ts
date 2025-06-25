@@ -1,30 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage-angular';
 import { BehaviorSubject } from 'rxjs';
 import { IPokemon } from '../pokeapi/pokeapi.mode';
 import { formatarNome } from 'src/app/utils/formatarNome.utils';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FavoritosService {
-  private _storage: Storage | null = null;
   private favoritosIdsSubject = new BehaviorSubject<number[]>([]);
   public favoritosIds$ = this.favoritosIdsSubject.asObservable();
 
-  constructor(private storage: Storage) {
+  constructor(private storageService: StorageService) {
     this.init();
   }
 
   async init() {
-    this._storage = await this.storage.create();
     const favoritos = await this.getFavoritos();
     const ids = favoritos.map((p) => p.id);
     this.favoritosIdsSubject.next(ids);
   }
 
   async getFavoritos(): Promise<IPokemon[]> {
-    const favoritos = (await this._storage?.get('favoritos')) || [];
+    const favoritos = (await this.storageService.get('favoritos')) || [];
     return favoritos.sort((a: IPokemon, b: IPokemon) => a.id - b.id);
   }
 
@@ -41,7 +39,7 @@ export class FavoritosService {
       novosFavoritos = [...favoritos, pokemon];
     }
 
-    await this._storage?.set('favoritos', novosFavoritos);
+    await this.storageService.set('favoritos', novosFavoritos);
 
     const novosIds = novosFavoritos.map((p) => p.id);
     this.favoritosIdsSubject.next(novosIds);
